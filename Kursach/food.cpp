@@ -1,5 +1,11 @@
 #include "food.h"
 
+Food::Food()
+{
+    this->x = 0;
+    this->y = 0;
+}
+
 Food::Food(double x, double y)
 {
     this->x = x;

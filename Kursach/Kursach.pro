@@ -26,4 +26,4 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
-QMAKE_LFLAGS = -v
+QMAKE_LFLAGS
