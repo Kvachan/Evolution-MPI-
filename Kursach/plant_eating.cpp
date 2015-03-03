@@ -8,6 +8,14 @@ PlantEating::PlantEating(double x, double y, double angle, double speed)
     this->speed = speed;
 }
 
+PlantEating::~PlantEating()
+{
+    this->x = 0;
+    this->y = 0;
+    this->angle = 0;
+    this->speed = 0;
+}
+
 void PlantEating::move()
 {
     double rangeToX = -sin(this->angle);

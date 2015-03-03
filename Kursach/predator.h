@@ -3,7 +3,7 @@
 
 #include "basicagent.h"
 
-class Predator : public basigAgent
+class Predator : public basicAgent
 {
     double x, y;
     double angle;
@@ -11,6 +11,8 @@ class Predator : public basigAgent
 
 public:
     Predator(double x, double y, double angle);
+    virtual ~Predator();
+
     void move();
 
     double getSpeed();

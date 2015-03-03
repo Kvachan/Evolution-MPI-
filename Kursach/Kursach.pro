@@ -16,13 +16,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     predator.cpp \
     food.cpp \
-    plant_eating.cpp
+    plant_eating.cpp \
+    environment.cpp
 
 HEADERS  += mainwindow.h \
     basicagent.h \
     predator.h \
     food.h \
-    plant_eating.h
+    plant_eating.h \
+    environment.h
 
 FORMS    += mainwindow.ui
 

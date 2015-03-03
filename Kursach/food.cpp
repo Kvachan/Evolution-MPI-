@@ -12,6 +12,12 @@ Food::Food(double x, double y)
     this->y = y;
 }
 
+Food::~Food()
+{
+    this->x = 0;
+    this->y = 0;
+}
+
 void Food::setX(double x)
 {
     this->x = x;

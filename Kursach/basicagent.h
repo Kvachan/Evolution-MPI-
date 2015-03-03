@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-class basigAgent
+class basicAgent
 {
 public:
     double getX();

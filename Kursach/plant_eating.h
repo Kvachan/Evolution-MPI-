@@ -9,6 +9,7 @@ class PlantEating : public Food
     double speed;
 public:
     PlantEating(double x, double y, double angle, double speed);
+    virtual ~PlantEating();
     void move();
 };
 

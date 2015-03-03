@@ -35,7 +35,7 @@ COMPRESS      = gzip -9f
 DISTNAME      = Kursach1.0.0
 DISTDIR = /Users/Kvachan/Projects/Evolution-MPI-/Kursach/.tmp/Kursach1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-LFLAGS        = -v -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -mmacosx-version-min=10.7 -Wl,-rpath,/Qt/5.4/clang_64/lib
+LFLAGS        = -headerpad_max_install_names -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -mmacosx-version-min=10.7 -Wl,-rpath,/Qt/5.4/clang_64/lib
 LIBS          = $(SUBLIBS) -F/Qt/5.4/clang_64/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
@@ -52,12 +52,14 @@ SOURCES       = ../Kursach/main.cpp \
 		../Kursach/mainwindow.cpp \
 		../Kursach/predator.cpp \
 		../Kursach/food.cpp \
-		../Kursach/plant_eating.cpp moc_mainwindow.cpp
+		../Kursach/plant_eating.cpp \
+		../Kursach/environment.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		predator.o \
 		food.o \
 		plant_eating.o \
+		environment.o \
 		moc_mainwindow.o
 DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		/Qt/5.4/clang_64/mkspecs/qdevice.pri \
@@ -191,11 +193,13 @@ DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		../Kursach/basicagent.h \
 		../Kursach/predator.h \
 		../Kursach/food.h \
-		../Kursach/plant_eating.h ../Kursach/main.cpp \
+		../Kursach/plant_eating.h \
+		../Kursach/environment.h ../Kursach/main.cpp \
 		../Kursach/mainwindow.cpp \
 		../Kursach/predator.cpp \
 		../Kursach/food.cpp \
-		../Kursach/plant_eating.cpp
+		../Kursach/plant_eating.cpp \
+		../Kursach/environment.cpp
 QMAKE_TARGET  = Kursach
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Kursach.app/Contents/MacOS/Kursach
@@ -531,8 +535,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kursach/mainwindow.h ../Kursach/basicagent.h ../Kursach/predator.h ../Kursach/food.h ../Kursach/plant_eating.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/predator.cpp ../Kursach/food.cpp ../Kursach/plant_eating.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kursach/mainwindow.h ../Kursach/basicagent.h ../Kursach/predator.h ../Kursach/food.h ../Kursach/plant_eating.h ../Kursach/environment.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/predator.cpp ../Kursach/food.cpp ../Kursach/plant_eating.cpp ../Kursach/environment.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Kursach/mainwindow.ui $(DISTDIR)/
 
 
@@ -611,6 +615,10 @@ plant_eating.o: ../Kursach/plant_eating.cpp ../Kursach/plant_eating.h \
 		../Kursach/food.h \
 		../Kursach/basicagent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o plant_eating.o ../Kursach/plant_eating.cpp
+
+environment.o: ../Kursach/environment.cpp ../Kursach/environment.h \
+		../Kursach/basicagent.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o environment.o ../Kursach/environment.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

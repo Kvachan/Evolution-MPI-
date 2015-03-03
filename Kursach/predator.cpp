@@ -9,6 +9,14 @@ Predator::Predator(double x, double y, double angle)
     this->speed = 0;
 }
 
+Predator::~Predator()
+{
+    this->x = 0;
+    this->y = 0;
+    this->speed = 0;
+    this->angle = 0;
+}
+
 double Predator::getX()
 {
     return this->x;
