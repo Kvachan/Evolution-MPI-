@@ -2,6 +2,8 @@
 #define BASICAGENT
 
 #include <math.h>
+#include <algorithm>
+#include <vector>
 
 class basicAgent
 {

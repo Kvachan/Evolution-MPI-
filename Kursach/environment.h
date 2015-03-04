@@ -1,7 +1,6 @@
 #ifndef ENVIRONMENT
 #define ENVIRONMENT
 
-#include <vector>
 #include "basicagent.h"
 
 class Environment

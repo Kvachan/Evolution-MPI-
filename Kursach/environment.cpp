@@ -35,18 +35,11 @@ bool Environment::addAgent(basicAgent Agent)
 bool Environment::removeAgent(basicAgent Agent)
 {
     std::vector<basicAgent>::iterator it;
-
     if(this->agents.empty())
     {
         return false;
     }
 
-    it = std::find(this->agents.begin(), this->agents.end(), Agent);
-
-    if(it != this->agents.end())
-    {
-        return true;
-    }
     return false;
 }
 
