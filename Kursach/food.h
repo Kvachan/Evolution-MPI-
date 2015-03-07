@@ -2,20 +2,15 @@
 #define FOOD
 
 #include "basicagent.h"
+#include "environment.h"
 
 class Food : public basicAgent
 {
-protected:
-    double x, y;
 public:
     Food();
     Food(double x, double y);
     virtual ~Food();
-
-    void setX(double x);
-    void setY(double y);
-    double getX();
-    double getY();
+    virtual void interact(Environment env);
 };
 
 #endif // FOOD

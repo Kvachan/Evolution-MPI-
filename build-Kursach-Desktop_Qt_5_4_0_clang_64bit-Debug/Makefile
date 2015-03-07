@@ -53,13 +53,15 @@ SOURCES       = ../Kursach/main.cpp \
 		../Kursach/predator.cpp \
 		../Kursach/food.cpp \
 		../Kursach/plant_eating.cpp \
-		../Kursach/environment.cpp moc_mainwindow.cpp
+		../Kursach/environment.cpp \
+		../Kursach/basicagent.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		predator.o \
 		food.o \
 		plant_eating.o \
 		environment.o \
+		basicagent.o \
 		moc_mainwindow.o
 DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		/Qt/5.4/clang_64/mkspecs/qdevice.pri \
@@ -199,7 +201,8 @@ DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		../Kursach/predator.cpp \
 		../Kursach/food.cpp \
 		../Kursach/plant_eating.cpp \
-		../Kursach/environment.cpp
+		../Kursach/environment.cpp \
+		../Kursach/basicagent.cpp
 QMAKE_TARGET  = Kursach
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Kursach.app/Contents/MacOS/Kursach
@@ -536,7 +539,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Kursach/mainwindow.h ../Kursach/basicagent.h ../Kursach/predator.h ../Kursach/food.h ../Kursach/plant_eating.h ../Kursach/environment.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/predator.cpp ../Kursach/food.cpp ../Kursach/plant_eating.cpp ../Kursach/environment.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/predator.cpp ../Kursach/food.cpp ../Kursach/plant_eating.cpp ../Kursach/environment.cpp ../Kursach/basicagent.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Kursach/mainwindow.ui $(DISTDIR)/
 
 
@@ -619,6 +622,9 @@ plant_eating.o: ../Kursach/plant_eating.cpp ../Kursach/plant_eating.h \
 environment.o: ../Kursach/environment.cpp ../Kursach/environment.h \
 		../Kursach/basicagent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o environment.o ../Kursach/environment.cpp
+
+basicagent.o: ../Kursach/basicagent.cpp ../Kursach/basicagent.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o basicagent.o ../Kursach/basicagent.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

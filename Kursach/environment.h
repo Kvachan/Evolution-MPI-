@@ -15,7 +15,7 @@ public:
     int getWidth();
 
     bool addAgent(basicAgent Agent);
-    bool removeAgent(basicAgent Agent);
+    bool removeAgent(basicAgent &Agent);
 
     std::vector<basicAgent> getAgents();
 

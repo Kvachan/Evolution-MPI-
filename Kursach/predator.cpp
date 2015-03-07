@@ -7,6 +7,7 @@ Predator::Predator(double x, double y, double angle)
     this->y = y;
     this->angle = angle;
     this->speed = 0;
+    this->visibility = true;
 }
 
 Predator::~Predator()
@@ -17,16 +18,6 @@ Predator::~Predator()
     this->angle = 0;
 }
 
-double Predator::getX()
-{
-    return this->x;
-}
-
-double Predator::getY()
-{
-    return this->y;
-}
-
 double Predator::getAngle()
 {
     return this->angle;
@@ -35,16 +26,6 @@ double Predator::getAngle()
 double Predator::getSpeed()
 {
     return speed;
-}
-
-void Predator::setX(double x)
-{
-    this->x = x;
-}
-
-void Predator::setY(double y)
-{
-    this->y = y;
 }
 
 void Predator::setAngle(double angle)

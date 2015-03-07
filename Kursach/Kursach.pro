@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     predator.cpp \
     food.cpp \
     plant_eating.cpp \
-    environment.cpp
+    environment.cpp \
+    basicagent.cpp
 
 HEADERS  += mainwindow.h \
     basicagent.h \

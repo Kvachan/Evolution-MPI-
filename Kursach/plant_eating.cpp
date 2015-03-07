@@ -6,6 +6,7 @@ PlantEating::PlantEating(double x, double y, double angle, double speed)
     this->y = y;
     this->angle = angle;
     this->speed = speed;
+    this->visibility = true;
 }
 
 PlantEating::~PlantEating()
@@ -22,4 +23,9 @@ void PlantEating::move()
     double rangeToY = cos(this->angle);
     this->setX(this->getX() + (rangeToX * this->speed));
     this->setY(this->getY() + (rangeToY * this->speed));
+}
+
+void PlantEating::interact(Environment env)
+{
+    //body
 }

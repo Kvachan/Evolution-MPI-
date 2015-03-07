@@ -32,15 +32,26 @@ bool Environment::addAgent(basicAgent Agent)
     return false;
 }
 
-bool Environment::removeAgent(basicAgent Agent)
+bool Environment::removeAgent(basicAgent &Agent)
 {
-    std::vector<basicAgent>::iterator it;
-    if(this->agents.empty())
-    {
-        return false;
-    }
+    Agent.setX(0.0);
+    Agent.setY(0.0);
+    Agent.setVisibility(false);
+    return true;
 
-    return false;
+//    delete Agent;
+//    std::vector<basicAgent>::iterator it;
+//    if(this->agents.empty())
+//    {
+//        return false;
+//    }
+//    it = std::find(this->agents.begin(), this->agents.end(), Agent);
+//    if(it != this->agents.end())
+//    {
+//        this->agents.erase(it);
+//        return true;
+//    }
+//    return false;
 }
 
 std::vector<basicAgent> Environment::getAgents()
@@ -50,8 +61,8 @@ std::vector<basicAgent> Environment::getAgents()
 
 void Environment::movingOutsideEnvironment(basicAgent &Agent)
 {
-    int x = Agent.getX();
-    int y = Agent.getY();
+    double x = Agent.getX();
+    double y = Agent.getY();
 
     if (x < 0)
     {

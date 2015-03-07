@@ -2,10 +2,11 @@
 #define PREDATOR
 
 #include "basicagent.h"
+#include "environment.h"
 
 class Predator : public basicAgent
 {
-    double x, y;
+//    double x, y;
     double angle;
     double speed;
 
@@ -24,11 +25,7 @@ public:
     double getRangeToX();
     double getRangeToY();
 
-    double getX();
-    void setX(double x);
-
-    double getY();
-    void setY(double y);
+    void interact()
 };
 
 #endif // PREDATOR
