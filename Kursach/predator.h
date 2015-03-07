@@ -4,28 +4,16 @@
 #include "basicagent.h"
 #include "environment.h"
 
-class Predator : public basicAgent
+class Predator : private basicAgent
 {
-//    double x, y;
-    double angle;
-    double speed;
 
 public:
     Predator(double x, double y, double angle);
-    virtual ~Predator();
+    ~Predator();
 
-    void move();
+    void move(Environment env);
 
-    double getSpeed();
-    void setSpeed(double speed);
-
-    double getAngle();
-    void setAngle(double angle);
-
-    double getRangeToX();
-    double getRangeToY();
-
-    void interact()
+    void interact(Environment env);
 };
 
 #endif // PREDATOR

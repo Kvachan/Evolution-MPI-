@@ -15,17 +15,18 @@ PlantEating::~PlantEating()
     this->y = 0;
     this->angle = 0;
     this->speed = 0;
+    this->visibility = false;
 }
 
-void PlantEating::move()
+void PlantEating::move(Environment env)
 {
     double rangeToX = -sin(this->angle);
     double rangeToY = cos(this->angle);
     this->setX(this->getX() + (rangeToX * this->speed));
-    this->setY(this->getY() + (rangeToY * this->speed));
+    this->setX(this->getY() + (rangeToY * this->speed));
 }
 
 void PlantEating::interact(Environment env)
 {
-    //body
+    this->move(env);
 }

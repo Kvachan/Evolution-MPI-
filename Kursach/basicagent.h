@@ -1,24 +1,32 @@
 #ifndef BASICAGENT
 #define BASICAGENT
 
-#include <math.h>
-#include <algorithm>
-#include <vector>
+#include "basic.h"
 
-class basicAgent
+class basicAgent : public Basic
 {
 protected:
-    double x, y;
-    bool visibility;
+    double angle, speed;
 public:
     virtual ~basicAgent();
+
     double getX();
     double getY();
+    double getSpeed();
+    double getAngle();
+    double getRangeToX();
+    double getRangeToY();
+
     void setX(double x);
     void setY(double y);
+    void setSpeed(double speed);
+    void setAngle(double angle);
+
     void setVisibility(bool answer);
+
+    virtual void move();
+
     virtual void interact();
-//    friend bool operator==(const basicAgent &A, const basicAgent &B);
 };
 
 

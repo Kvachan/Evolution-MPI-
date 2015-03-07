@@ -16,7 +16,6 @@ int Environment::getHeight()
 {
     return this->height;
 }
-
 int Environment::getWidth()
 {
     return this->width;
@@ -31,7 +30,6 @@ bool Environment::addAgent(basicAgent Agent)
     };
     return false;
 }
-
 bool Environment::removeAgent(basicAgent &Agent)
 {
     Agent.setX(0.0);

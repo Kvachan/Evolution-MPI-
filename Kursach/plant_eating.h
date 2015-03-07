@@ -2,15 +2,16 @@
 #define PLANTEATING
 
 #include "food.h"
+#include "basicagent.h"
 
-class PlantEating : public Food
+class PlantEating : private basicAgent, private Food
 {
-    double angle;
-    double speed;
 public:
     PlantEating(double x, double y, double angle, double speed);
-    virtual ~PlantEating();
-    void move();
+    ~PlantEating();
+
+    void move(Environment env);
+
     void interact(Environment env);
 };
 

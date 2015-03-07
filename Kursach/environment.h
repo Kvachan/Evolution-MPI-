@@ -20,6 +20,7 @@ public:
     std::vector<basicAgent> getAgents();
 
     void movingOutsideEnvironment(basicAgent &Agent);
+
 };
 
 #endif // ENVIRONMENT

@@ -25,7 +25,8 @@ HEADERS  += mainwindow.h \
     predator.h \
     food.h \
     plant_eating.h \
-    environment.h
+    environment.h \
+    basic.h
 
 FORMS    += mainwindow.ui
 

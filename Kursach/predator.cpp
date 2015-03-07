@@ -16,42 +16,20 @@ Predator::~Predator()
     this->y = 0;
     this->speed = 0;
     this->angle = 0;
+    this->visibility = false;
 }
 
-double Predator::getAngle()
-{
-    return this->angle;
-}
 
-double Predator::getSpeed()
-{
-    return speed;
-}
 
-void Predator::setAngle(double angle)
-{
-    this->angle = angle;
-}
-
-void Predator::setSpeed(double speed)
-{
-    this->speed = speed;
-}
-
-double Predator::getRangeToX()
-{
-    return -sin(this->angle);
-}
-
-double Predator::getRangeToY()
-{
-    return cos(this->angle);
-}
-
-void Predator::move()
+void Predator::move(Environment env)
 {
     double rangeToX = -sin(this->angle);
     double rangetToY = cos(this->angle);
     this->x += rangeToX;
     this->y += rangetToY;
+}
+
+void Predator::interact(Environment env)
+{
+    //body
 }
