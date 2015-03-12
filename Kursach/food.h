@@ -3,7 +3,7 @@
 
 #include "environment.h"
 
-class Food : private Basic
+class Food : private virtual Basic
 {
 protected:
     virtual void interact(Environment env);

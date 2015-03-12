@@ -3,7 +3,7 @@
 
 #include "basic.h"
 
-class basicAgent : public Basic
+class basicAgent : public virtual Basic
 {
 protected:
     double angle, speed;
