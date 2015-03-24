@@ -1,17 +1,23 @@
 #ifndef FOOD
 #define FOOD
 
-#include "environment.h"
+#include "abstractagent.h"
+class AgentsEnvironment;
 
-class Food : private virtual Basic
-{
-protected:
-    virtual void interact(Environment env);
+class Food : public AbstractAgent {
+    double x;
+    double y;
 public:
     Food();
     Food(double x, double y);
-    virtual ~Food();
+
+    double getX() override;
+    double getY() override;
+
+    void setX(double x) override;
+    void setY(double y) override;
+
+    void interact(AgentsEnvironment *env) override;
 };
 
 #endif // FOOD
-

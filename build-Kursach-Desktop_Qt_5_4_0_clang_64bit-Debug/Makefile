@@ -50,18 +50,18 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../Kursach/main.cpp \
 		../Kursach/mainwindow.cpp \
-		../Kursach/predator.cpp \
+		../Kursach/agent.cpp \
 		../Kursach/food.cpp \
-		../Kursach/plant_eating.cpp \
-		../Kursach/environment.cpp \
-		../Kursach/basicagent.cpp moc_mainwindow.cpp
+		../Kursach/movingfood.cpp \
+		../Kursach/agentsenvironment.cpp \
+		../Kursach/eaternfoodobserver.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		predator.o \
+		agent.o \
 		food.o \
-		plant_eating.o \
-		environment.o \
-		basicagent.o \
+		movingfood.o \
+		agentsenvironment.o \
+		eaternfoodobserver.o \
 		moc_mainwindow.o
 DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		/Qt/5.4/clang_64/mkspecs/qdevice.pri \
@@ -192,17 +192,19 @@ DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		/Qt/5.4/clang_64/mkspecs/features/yacc.prf \
 		/Qt/5.4/clang_64/mkspecs/features/lex.prf \
 		../Kursach/Kursach.pro ../Kursach/mainwindow.h \
-		../Kursach/basicagent.h \
-		../Kursach/predator.h \
+		../Kursach/abstractagent.h \
+		../Kursach/agent.h \
 		../Kursach/food.h \
-		../Kursach/plant_eating.h \
-		../Kursach/environment.h ../Kursach/main.cpp \
+		../Kursach/movingfood.h \
+		../Kursach/agentsenvironment.h \
+		../Kursach/environmentobserver.h \
+		../Kursach/eatenfoodobserver.h ../Kursach/main.cpp \
 		../Kursach/mainwindow.cpp \
-		../Kursach/predator.cpp \
+		../Kursach/agent.cpp \
 		../Kursach/food.cpp \
-		../Kursach/plant_eating.cpp \
-		../Kursach/environment.cpp \
-		../Kursach/basicagent.cpp
+		../Kursach/movingfood.cpp \
+		../Kursach/agentsenvironment.cpp \
+		../Kursach/eaternfoodobserver.cpp
 QMAKE_TARGET  = Kursach
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Kursach.app/Contents/MacOS/Kursach
@@ -525,7 +527,7 @@ Kursach.app/Contents/Resources/empty.lproj:
 Kursach.app/Contents/Info.plist: 
 	@test -d Kursach.app/Contents || mkdir -p Kursach.app/Contents
 	@$(DEL_FILE) Kursach.app/Contents/Info.plist
-	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,@FULL_VERSION@,1.0.0,g" -e "s,@TYPEINFO@,????,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.Kursach,g" -e "s,@ICON@,,g" -e "s,@EXECUTABLE@,Kursach,g" -e "s,@TYPEINFO@,????,g" /Qt/5.4/clang_64/mkspecs/macx-clang/Info.plist.app >Kursach.app/Contents/Info.plist
+	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,@FULL_VERSION@,1.0.0,g" -e "s,@TYPEINFO@,????,g" -e "s,@BUNDLEIDENTIFIER@,KP.Kursach,g" -e "s,@ICON@,,g" -e "s,@EXECUTABLE@,Kursach,g" -e "s,@TYPEINFO@,????,g" /Qt/5.4/clang_64/mkspecs/macx-clang/Info.plist.app >Kursach.app/Contents/Info.plist
 
 all: Makefile \
 		Kursach.app/Contents/PkgInfo \
@@ -538,8 +540,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kursach/mainwindow.h ../Kursach/basicagent.h ../Kursach/predator.h ../Kursach/food.h ../Kursach/plant_eating.h ../Kursach/environment.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/predator.cpp ../Kursach/food.cpp ../Kursach/plant_eating.cpp ../Kursach/environment.cpp ../Kursach/basicagent.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kursach/mainwindow.h ../Kursach/abstractagent.h ../Kursach/agent.h ../Kursach/food.h ../Kursach/movingfood.h ../Kursach/agentsenvironment.h ../Kursach/environmentobserver.h ../Kursach/eatenfoodobserver.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/agent.cpp ../Kursach/food.cpp ../Kursach/movingfood.cpp ../Kursach/agentsenvironment.cpp ../Kursach/eaternfoodobserver.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Kursach/mainwindow.ui $(DISTDIR)/
 
 
@@ -606,25 +608,36 @@ mainwindow.o: ../Kursach/mainwindow.cpp ../Kursach/mainwindow.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Kursach/mainwindow.cpp
 
-predator.o: ../Kursach/predator.cpp ../Kursach/predator.h \
-		../Kursach/basicagent.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o predator.o ../Kursach/predator.cpp
+agent.o: ../Kursach/agent.cpp ../Kursach/agent.h \
+		../Kursach/abstractagent.h \
+		../Kursach/agentsenvironment.h \
+		../Kursach/environmentobserver.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o agent.o ../Kursach/agent.cpp
 
 food.o: ../Kursach/food.cpp ../Kursach/food.h \
-		../Kursach/basicagent.h
+		../Kursach/abstractagent.h \
+		../Kursach/agentsenvironment.h \
+		../Kursach/environmentobserver.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o food.o ../Kursach/food.cpp
 
-plant_eating.o: ../Kursach/plant_eating.cpp ../Kursach/plant_eating.h \
+movingfood.o: ../Kursach/movingfood.cpp ../Kursach/movingfood.h \
 		../Kursach/food.h \
-		../Kursach/basicagent.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o plant_eating.o ../Kursach/plant_eating.cpp
+		../Kursach/abstractagent.h \
+		../Kursach/agentsenvironment.h \
+		../Kursach/environmentobserver.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o movingfood.o ../Kursach/movingfood.cpp
 
-environment.o: ../Kursach/environment.cpp ../Kursach/environment.h \
-		../Kursach/basicagent.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o environment.o ../Kursach/environment.cpp
+agentsenvironment.o: ../Kursach/agentsenvironment.cpp ../Kursach/agentsenvironment.h \
+		../Kursach/abstractagent.h \
+		../Kursach/environmentobserver.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o agentsenvironment.o ../Kursach/agentsenvironment.cpp
 
-basicagent.o: ../Kursach/basicagent.cpp ../Kursach/basicagent.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o basicagent.o ../Kursach/basicagent.cpp
+eaternfoodobserver.o: ../Kursach/eaternfoodobserver.cpp ../Kursach/eatenfoodobserver.h \
+		../Kursach/environmentobserver.h \
+		../Kursach/agent.h \
+		../Kursach/abstractagent.h \
+		../Kursach/food.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o eaternfoodobserver.o ../Kursach/eaternfoodobserver.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

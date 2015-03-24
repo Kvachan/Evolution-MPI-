@@ -1,25 +1,32 @@
 #include "food.h"
+#include "agentsenvironment.h"
 
-Food::Food()
-{
-    this->x = 0;
-    this->y = 0;
-    this->visibility = true;
+Food::Food() {
+    x = 0;
+    y = 0;
 }
 
-Food::Food(double x, double y)
-{
+Food::Food(double x, double y) {
     this->x = x;
     this->y = y;
 }
 
-Food::~Food()
-{
-    this->x = 0;
-    this->y = 0;
+double Food::getX() {
+    return x;
 }
 
-void Food::interact(Environment env)
-{
-    //body
+double Food::getY() {
+    return y;
+}
+
+void Food::setX(double x) {
+    this->x = x;
+}
+
+void Food::setY(double y) {
+    this->y = y;
+}
+
+void Food::interact(AgentsEnvironment *env) {
+
 }

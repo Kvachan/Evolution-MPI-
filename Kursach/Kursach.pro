@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2015-02-26T02:09:47
+# Project created by QtCreator 2015-03-16T08:18:47
 #
 #-------------------------------------------------
 
@@ -14,20 +14,19 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    predator.cpp \
+    agent.cpp \
     food.cpp \
-    plant_eating.cpp \
-    environment.cpp \
-    basicagent.cpp
+    movingfood.cpp \
+    agentsenvironment.cpp \
+    eaternfoodobserver.cpp
 
 HEADERS  += mainwindow.h \
-    basicagent.h \
-    predator.h \
+    abstractagent.h \
+    agent.h \
     food.h \
-    plant_eating.h \
-    environment.h \
-    basic.h
+    movingfood.h \
+    agentsenvironment.h \
+    environmentobserver.h \
+    eatenfoodobserver.h
 
 FORMS    += mainwindow.ui
-
-QMAKE_LFLAGS
