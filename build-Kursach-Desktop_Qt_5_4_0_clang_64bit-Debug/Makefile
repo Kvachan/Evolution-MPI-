@@ -610,33 +610,30 @@ mainwindow.o: ../Kursach/mainwindow.cpp ../Kursach/mainwindow.h \
 
 agent.o: ../Kursach/agent.cpp ../Kursach/agent.h \
 		../Kursach/abstractagent.h \
-		../Kursach/agentsenvironment.h \
-		../Kursach/environmentobserver.h
+		../Kursach/agentsenvironment.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o agent.o ../Kursach/agent.cpp
 
 food.o: ../Kursach/food.cpp ../Kursach/food.h \
 		../Kursach/abstractagent.h \
-		../Kursach/agentsenvironment.h \
-		../Kursach/environmentobserver.h
+		../Kursach/agentsenvironment.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o food.o ../Kursach/food.cpp
 
 movingfood.o: ../Kursach/movingfood.cpp ../Kursach/movingfood.h \
 		../Kursach/food.h \
 		../Kursach/abstractagent.h \
-		../Kursach/agentsenvironment.h \
-		../Kursach/environmentobserver.h
+		../Kursach/agentsenvironment.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o movingfood.o ../Kursach/movingfood.cpp
 
 agentsenvironment.o: ../Kursach/agentsenvironment.cpp ../Kursach/agentsenvironment.h \
-		../Kursach/abstractagent.h \
-		../Kursach/environmentobserver.h
+		../Kursach/abstractagent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o agentsenvironment.o ../Kursach/agentsenvironment.cpp
 
 eaternfoodobserver.o: ../Kursach/eaternfoodobserver.cpp ../Kursach/eatenfoodobserver.h \
 		../Kursach/environmentobserver.h \
-		../Kursach/agent.h \
+		../Kursach/agentsenvironment.h \
+		../Kursach/food.h \
 		../Kursach/abstractagent.h \
-		../Kursach/food.h
+		../Kursach/agent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o eaternfoodobserver.o ../Kursach/eaternfoodobserver.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 

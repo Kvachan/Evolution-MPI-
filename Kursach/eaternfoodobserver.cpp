@@ -72,57 +72,20 @@ std::vector<Agent*> EaternFoodObserver::getCollidedFishes(AgentsEnvironment *env
           int fishesCount = allFishes.size();
 
           for (int i = 0; i < (fishesCount - 1); i++) {
-              Agent firstFish = allFishes[i];
+              auto firstFish = allFishes[i];
               for (int j = i + 1; j < fishesCount; j++) {
-                  Agent secondFish = allFishes.get(j);
-                  double distanceToSecondFish = abs(firstFish.getX() - secondFish.getX(), firstFish.getY() - secondFish.getY());
+                  auto secondFish = allFishes[j];
+                  double distanceToSecondFish = sqrt(
+                              pow((firstFish->getX() - secondFish->getX()), 2)
+                              +
+                              pow((firstFish->getY() - secondFish->getY()), 2));
                   if (distanceToSecondFish < maxFishesDistance) {
-                      collidedFishes.push_back(&secondFish);
+                      collidedFishes.push_back(secondFish);
                   }
               }
           }
           return collidedFishes;
 }
 
-//std::vector<Food *> getFood(AgentsEnvironment *env);
-
-//std::vector<Agent *> EaternFoodObserver::getAgent(AgentsEnvironment* env)
-//{
-//    return AgentsEnvHelper::getAgents<Agent>(env);
-//}
-
-//std::vector<Food*> EaternFoodObserver::getFood(AgentsEnvironment* env)
-//{
-//    return AgentsEnvHelper::getAgents< Food >( env );
-//}
-
-
-
-//    public void notify(AgentsEnvironment env) {
-//        List<Food> eatenFood = this.getEatenFood(env);
-//        this.score += eatenFood.size();
-
-//        List<Agent> collidedFishes = this.getCollidedFishes(env);
-//        this.score -= collidedFishes.size() * 0.5;
-
-//        this.removeEatenAndCreateNewFood(env, eatenFood);
-//    }
-
-//    private List<Agent> getCollidedFishes(AgentsEnvironment env) {
-//        List<Agent> collidedFishes = new LinkedList<Agent>();
-
-//        List<Agent> allFishes = this.getFishes(env);
-//        int fishesCount = allFishes.size();
-
-//        for (int i = 0; i < (fishesCount - 1); i++) {
-//            Agent firstFish = allFishes.get(i);
-//            for (int j = i + 1; j < fishesCount; j++) {
-//                Agent secondFish = allFishes.get(j);
-//                double distanceToSecondFish = this.module(firstFish.getX() - secondFish.getX(), firstFish.getY() - secondFish.getY());
-//                if (distanceToSecondFish < maxFishesDistance) {
-//                    collidedFishes.add(secondFish);
-//                }
-//            }
-//        }
-//        return collidedFishes;
-//    }
+std::vector<Agent*> EaternFoodObserver::getFishes(AgentsEnvironment *env) {
+}

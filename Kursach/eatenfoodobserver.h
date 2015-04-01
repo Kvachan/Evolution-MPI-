@@ -4,10 +4,12 @@
 #include "environmentobserver.h"
 #include "vector"
 #include "AgentsEnvironment.h"
+#include "food.h"
+#include "agent.h"
 
-class Agent;
-class Food;
-class AgentsEnvironment;
+//class Agent;
+//class Food;
+//class AgentsEnvironment;
 
 class EaternFoodObserver : public EnvironmentObserver {
     double score;
@@ -19,9 +21,9 @@ protected:
     void removeEatenAndCreateNewFood(AgentsEnvironment* env, std::vector<Food*> eatenFood);
 private:
     std::vector<Agent*> getCollidedFishes(AgentsEnvironment *env);
-    std::vector<Food *> getEaternFood(AgentsEnvironment *env);
-    std::vector<Agent *> getAgent(AgentsEnvironment *env);
-    std::vector<Food *> getFood(AgentsEnvironment *env);
+    std::vector<Food*> getEaternFood(AgentsEnvironment *env);
+    std::vector<Agent*> getAgent(AgentsEnvironment *env);
+    std::vector<Food*> getFood(AgentsEnvironment *env);
     std::vector<Agent*> getFishes(AgentsEnvironment *env);
 
 public:
