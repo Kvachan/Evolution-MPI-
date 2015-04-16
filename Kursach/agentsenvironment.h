@@ -21,7 +21,7 @@ public:
     int getHeight();
 
     void timeStep();
-    const std::vector<AbstractAgent *> &getAgents();
+    const std::vector<AbstractAgent *> getAgents();
     void addAgent(AbstractAgent *agent);
     void removeAgent(AbstractAgent *agent);
 };

@@ -64,7 +64,8 @@ void AgentsEnvironment::removeAgent(AbstractAgent *agent) {
     agents.pop_back();
 }
 
-const std::vector<AbstractAgent*> &AgentsEnvironment::getAgents() {
+const std::vector<AbstractAgent *> AgentsEnvironment::getAgents() {
     return agents;
 }
 
+//const std::vector<AbstractAgent *> &getAgents();

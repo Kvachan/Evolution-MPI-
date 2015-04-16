@@ -18,7 +18,12 @@ SOURCES += main.cpp\
     food.cpp \
     movingfood.cpp \
     agentsenvironment.cpp \
-    eaternfoodobserver.cpp
+    eaternfoodobserver.cpp \
+    neuron.cpp \
+    links.cpp \
+    neuralnetworks.cpp \
+    neuralnetworkdrivenagent.cpp \
+    optimizableneuralnetworks.cpp
 
 HEADERS  += mainwindow.h \
     abstractagent.h \
@@ -27,6 +32,14 @@ HEADERS  += mainwindow.h \
     movingfood.h \
     agentsenvironment.h \
     environmentobserver.h \
-    eatenfoodobserver.h
+    eatenfoodobserver.h \
+    neuralnetworkdrivenagent.h \
+    neuralnetworks.h \
+    neuron.h \
+    thresholdfunction.h \
+    links.h \
+    cloneable.h \
+    optimizableneuralnetwork.h \
+    random.h
 
 FORMS    += mainwindow.ui

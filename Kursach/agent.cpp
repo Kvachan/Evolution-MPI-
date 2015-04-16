@@ -67,4 +67,3 @@ double Agent::getRy() {
 void Agent::interact(AgentsEnvironment *env) {
 
 }
-

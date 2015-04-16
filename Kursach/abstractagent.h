@@ -3,6 +3,8 @@
 
 #include <math.h>
 #include <vector>
+#include <cstdlib>
+#include <iostream>
 
 class AgentsEnvironment;
 

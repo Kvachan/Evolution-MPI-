@@ -4,15 +4,19 @@
 #include "agentsenvironment.h"
 #include <math.h>
 
+double EaternFoodObserver::minEatDistance = 5;
+double EaternFoodObserver::maxFishesDistance = 5;
+
 EaternFoodObserver::EaternFoodObserver() {
-    this->maxFishesDistance = 5;
-    this->minEatDistance = 5;
     this->score = 0;
 }
 
 void EaternFoodObserver::notify(AgentsEnvironment *env) {
     std::vector<Food*> eaternFood = this->getEaternFood(env);
-
+    score += eaternFood.size();
+    std::vector<Agent*> collidedFishes = this->getCollidedFishes(env);
+    score -= collidedFishes.size() * 0.5;
+    this->removeEatenAndCreateNewFood(env, eaternFood);
 }
 
 std::vector<Food*> EaternFoodObserver::getEaternFood(AgentsEnvironment *env) {
@@ -40,22 +44,16 @@ std::vector<Agent*> EaternFoodObserver::getAgent(AgentsEnvironment *env) {
             return fishes;
 }
 
-std::vector<Food*> EaternFoodObserver::getFood(AgentsEnvironment *env) {
-    std::vector<Food*> temp;
-    return temp;
-}
-
 double EaternFoodObserver::getScore() {
     if (score < 0) return 0;
     return score;
 }
 
 void EaternFoodObserver::addRandomPieceOfFood(AgentsEnvironment *env) {
-//    int x =
-//    int x = this->random.nextInt(env->getWidth());
-//    int y = this->random.nextInt(env->getHeight());
-//    Food newFood = new Food(x, y);
-//    env->addAgent(newFood);
+    int x = std::rand() % env->getWidth();
+    int y = std::rand() % env->getHeight();
+    Food* newFood = new Food(x, y);
+    env->addAgent(newFood);
 }
 
 void EaternFoodObserver::removeEatenAndCreateNewFood(AgentsEnvironment *env, std::vector<Food*> eatenFood) {
@@ -88,4 +86,24 @@ std::vector<Agent*> EaternFoodObserver::getCollidedFishes(AgentsEnvironment *env
 }
 
 std::vector<Agent*> EaternFoodObserver::getFishes(AgentsEnvironment *env) {
+    std::vector<Agent*> fishes;
+    auto abstractAgents = env->getAgents();
+    for (auto abstactAgent : abstractAgents) {
+        if (auto agent = dynamic_cast<Agent*>(abstactAgent)) {
+            fishes.push_back(agent);
+        }
+    }
+    return fishes;
 }
+
+std::vector<Food*> EaternFoodObserver::getFood(AgentsEnvironment *env) {
+    std::vector<Food*> foods;
+    auto abstractAgents = env->getAgents();
+    for (auto abstractAgent : abstractAgents) {
+        if (auto agent = dynamic_cast<Food*>(abstractAgent)) {
+            foods.push_back(agent);
+        }
+    }
+    return foods;
+}
+
