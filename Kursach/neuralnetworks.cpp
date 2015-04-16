@@ -1,5 +1,7 @@
 #include "neuralnetworks.h"
 
+
+
 NeuralNetwork::NeuralNetwork() {
     activationIterations = 1;
 }
@@ -75,6 +77,10 @@ std::vector<Neuron> NeuralNetwork::getNeurons() {
 
 int NeuralNetwork::getNeuronsCount() {
     return neurons.size();
+}
+
+void NeuralNetwork::setNeuronalLinks(Links *newNeuronLinks) {
+    this->neuronsLinks = newNeuronLinks;
 }
 
 void NeuralNetwork::setNeurons(std::vector<Neuron> newNeurons) {

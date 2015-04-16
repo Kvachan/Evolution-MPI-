@@ -3,6 +3,7 @@
 
 #include "cloneable.h"
 #include <map>
+#include <set>
 #include <vector>
 #include <string>
 
@@ -22,6 +23,8 @@ public:
 
     void setLinksCount(int count);
 
+    std::set<int> getReceivers(int activatorNeuronNumber);
+
     Links* clone();
 
     std::string toString() override;
@@ -32,14 +35,4 @@ public:
 #endif // LINKS
 
 
-/*
- * public Collection<Integer> getReceivers(int activatorNeuronNumber) {
-        Collection<Integer> ret = null;
-        if (this.links.containsKey(activatorNeuronNumber)) {
-            ret = Collections.unmodifiableSet(this.links.get(activatorNeuronNumber).keySet());
-        } else {
-            ret = Collections.emptySet();
-        }
-        return ret;
-    }
-*/
+

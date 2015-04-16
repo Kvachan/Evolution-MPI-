@@ -83,3 +83,20 @@ std::string Links::toString() {
     //retString = "Links [links=" + links + ", totalLinksCount=" + totalLinksCount + "]";
     return retString;
 }
+
+std::set<int> Links::getReceivers(int activatorNeuronNumber) {
+    std::set<int> ret;
+    return ret;
+}
+
+/*
+ * public Collection<Integer> getReceivers(int activatorNeuronNumber) {
+        Collection<Integer> ret = null;
+        if (this.links.containsKey(activatorNeuronNumber)) {
+            ret = Collections.unmodifiableSet(this.links.get(activatorNeuronNumber).keySet());
+        } else {
+            ret = Collections.emptySet();
+        }
+        return ret;
+    }
+*/

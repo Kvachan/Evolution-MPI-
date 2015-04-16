@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     links.cpp \
     neuralnetworks.cpp \
     neuralnetworkdrivenagent.cpp \
-    optimizableneuralnetworks.cpp
+    optimizableneuralnetworks.cpp \
+    globalfunctions.cpp
 
 HEADERS  += mainwindow.h \
     abstractagent.h \

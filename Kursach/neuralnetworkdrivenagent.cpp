@@ -2,10 +2,11 @@
 #include <cmath>
 
 double NeuralNetworkDrivenAgent::maxSpeed = 4;
-double NeuralNetworkDrivenAgent::maxAgentsDistance = 1;
+double NeuralNetworkDrivenAgent::maxDeltaAngle = 1;
 double NeuralNetworkDrivenAgent::AGENTS = -10;
 double NeuralNetworkDrivenAgent::EMPTY = 0;
 double NeuralNetworkDrivenAgent::FOOD = 10;
+double NeuralNetworkDrivenAgent::maxAgentsDistance = 1;
 
 NeuralNetworkDrivenAgent::NeuralNetworkDrivenAgent(double x, double y, double angle)
     : Agent(x, y, angle) {
@@ -52,6 +53,8 @@ void NeuralNetworkDrivenAgent::activateNeuralNetwork(std::vector<double> nnInput
 }
 
 std::vector<double> NeuralNetworkDrivenAgent::createNnInputs(AgentsEnvironment *environment) {
+    std::vector<double> nn;
+    return nn;
 //    protected List<Double> createNnInputs(AgentsEnvironment environment) {
 //        // Find nearest food
 //        Food nearestFood = null;
@@ -162,46 +165,51 @@ double NeuralNetworkDrivenAgent::pseudoScalarProduct(double vx1, double vy1, dou
     return (vx1 * vy2) - (vy1 * vx2);
 }
 
-//private double normalizeSpeed(double speed) {
-//    double abs = Math.abs(speed);
-//    if (abs > maxSpeed) {
-//        double sign = Math.signum(speed);
-//        speed = sign * (abs - (Math.floor(abs / maxSpeed) * maxSpeed));
-//    }
-//    return speed;
-//}
+#define SIGNUM(Value) ((Value) < 0 ? (-1) : !!(Value))
 
-//private double normalizeDeltaAngle(double angle) {
-//    double abs = Math.abs(angle);
-//    if (abs > maxDeltaAngle) {
-//        double sign = Math.signum(angle);
-//        angle = sign * (abs - (Math.floor(abs / maxDeltaAngle) * maxDeltaAngle));
-//    }
-//    return angle;
-//}
+double NeuralNetworkDrivenAgent::normalizeSpeed(double speed) {
+    double absolut = std::abs(speed);
+    if(absolut > maxSpeed) {
+        double sign = SIGNUM(speed);
+        speed = sign * (absolut - (floor(absolut / maxSpeed) * maxSpeed));
+    }
+    return speed;
+}
 
-//public static OptimizableNeuralNetwork randomNeuralNetworkBrain() {
-//    OptimizableNeuralNetwork nn = new OptimizableNeuralNetwork(15);
-//    for (int i = 0; i < 15; i++) {
-//        ThresholdFunction f = ThresholdFunction.getRandomFunction();
-//        nn.setNeuronFunction(i, f, f.getDefaultParams());
-//    }
-//    for (int i = 0; i < 6; i++) {
-//        nn.setNeuronFunction(i, ThresholdFunction.LINEAR, ThresholdFunction.LINEAR.getDefaultParams());
-//    }
-//    for (int i = 0; i < 6; i++) {
-//        for (int j = 6; j < 15; j++) {
-//            nn.addLink(i, j, Math.random());
-//        }
-//    }
-//    for (int i = 6; i < 15; i++) {
-//        for (int j = 6; j < 15; j++) {
-//            if (i < j) {
-//                nn.addLink(i, j, Math.random());
-//            }
-//        }
-//    }
-//    return nn;
-//}
+double NeuralNetworkDrivenAgent::normalizeDeltaAngle(double angle) {
+    double absolut = std::abs(angle);
+    if(absolut > maxDeltaAngle) {
+        double sign = SIGNUM(angle);
+        angle = sign * (absolut - (floor(absolut / maxDeltaAngle) * maxDeltaAngle));
+    }
+    return angle;
+}
+
+OptimizableNeuralNetwork NeuralNetworkDrivenAgent::randomNeuralNetworkBrain() {
+    OptimizableNeuralNetwork nn(15);
+    for(int i = 0; i < 15; i++) {
+        ThresholdFunctionSigma f;
+        nn.setNeuronFunction(i, f, f.getDefaultParams());
+    }
+    for(int i = 0; i < 6; i++) {
+        ThresholdFunctionLinear f;
+        nn.setNeuronFunction(i,  f, f.getDefaultParams());
+    }
+    for(int i = 0; i < 6; i++) {
+        for(int j = 0; j < 15; j++) {
+            nn.addLink(i, j, rand());
+        }
+    }
+    for(int i = 6; i < 15; i++) {
+        for(int j = 6; j < 15; j++) {
+            if ( i < j) {
+                nn.addLink(i, j, rand());
+            }
+        }
+    }
+    return nn;
+}
+
+
 
 

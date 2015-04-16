@@ -59,7 +59,8 @@ SOURCES       = ../Kursach/main.cpp \
 		../Kursach/links.cpp \
 		../Kursach/neuralnetworks.cpp \
 		../Kursach/neuralnetworkdrivenagent.cpp \
-		../Kursach/optimizableneuralnetworks.cpp moc_mainwindow.cpp
+		../Kursach/optimizableneuralnetworks.cpp \
+		../Kursach/globalfunctions.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		agent.o \
@@ -72,6 +73,7 @@ OBJECTS       = main.o \
 		neuralnetworks.o \
 		neuralnetworkdrivenagent.o \
 		optimizableneuralnetworks.o \
+		globalfunctions.o \
 		moc_mainwindow.o
 DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		/Qt/5.4/clang_64/mkspecs/qdevice.pri \
@@ -227,7 +229,8 @@ DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		../Kursach/links.cpp \
 		../Kursach/neuralnetworks.cpp \
 		../Kursach/neuralnetworkdrivenagent.cpp \
-		../Kursach/optimizableneuralnetworks.cpp
+		../Kursach/optimizableneuralnetworks.cpp \
+		../Kursach/globalfunctions.cpp
 QMAKE_TARGET  = Kursach
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Kursach.app/Contents/MacOS/Kursach
@@ -564,7 +567,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Kursach/mainwindow.h ../Kursach/abstractagent.h ../Kursach/agent.h ../Kursach/food.h ../Kursach/movingfood.h ../Kursach/agentsenvironment.h ../Kursach/environmentobserver.h ../Kursach/eatenfoodobserver.h ../Kursach/neuralnetworkdrivenagent.h ../Kursach/neuralnetworks.h ../Kursach/neuron.h ../Kursach/thresholdfunction.h ../Kursach/links.h ../Kursach/cloneable.h ../Kursach/optimizableneuralnetwork.h ../Kursach/random.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/agent.cpp ../Kursach/food.cpp ../Kursach/movingfood.cpp ../Kursach/agentsenvironment.cpp ../Kursach/eaternfoodobserver.cpp ../Kursach/neuron.cpp ../Kursach/links.cpp ../Kursach/neuralnetworks.cpp ../Kursach/neuralnetworkdrivenagent.cpp ../Kursach/optimizableneuralnetworks.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/agent.cpp ../Kursach/food.cpp ../Kursach/movingfood.cpp ../Kursach/agentsenvironment.cpp ../Kursach/eaternfoodobserver.cpp ../Kursach/neuron.cpp ../Kursach/links.cpp ../Kursach/neuralnetworks.cpp ../Kursach/neuralnetworkdrivenagent.cpp ../Kursach/optimizableneuralnetworks.cpp ../Kursach/globalfunctions.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Kursach/mainwindow.ui $(DISTDIR)/
 
 
@@ -688,7 +691,9 @@ neuralnetworkdrivenagent.o: ../Kursach/neuralnetworkdrivenagent.cpp ../Kursach/n
 		../Kursach/thresholdfunction.h \
 		/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QSharedPointer \
 		/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qsharedpointer.h \
-		../Kursach/links.h
+		../Kursach/links.h \
+		../Kursach/optimizableneuralnetwork.h \
+		../Kursach/random.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o neuralnetworkdrivenagent.o ../Kursach/neuralnetworkdrivenagent.cpp
 
 optimizableneuralnetworks.o: ../Kursach/optimizableneuralnetworks.cpp ../Kursach/optimizableneuralnetwork.h \
@@ -698,8 +703,12 @@ optimizableneuralnetworks.o: ../Kursach/optimizableneuralnetworks.cpp ../Kursach
 		../Kursach/thresholdfunction.h \
 		/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QSharedPointer \
 		/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qsharedpointer.h \
-		../Kursach/links.h
+		../Kursach/links.h \
+		../Kursach/random.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o optimizableneuralnetworks.o ../Kursach/optimizableneuralnetworks.cpp
+
+globalfunctions.o: ../Kursach/globalfunctions.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o globalfunctions.o ../Kursach/globalfunctions.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

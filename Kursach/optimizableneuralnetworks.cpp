@@ -3,6 +3,9 @@
 #include <tr1/functional>
 using std::tr1::hash;
 
+double OptimizableNeuralNetwork::weightsMutationInterval = 1;
+double OptimizableNeuralNetwork::neuronParamsMutationInterval = 1;
+
 OptimizableNeuralNetwork::OptimizableNeuralNetwork() {};
 
 OptimizableNeuralNetwork::OptimizableNeuralNetwork(int numberOfNeurons)
@@ -96,37 +99,30 @@ void OptimizableNeuralNetwork::uniformelyDistributedNeuronsCrossover(std::vector
     }
 }
 
-//void OptimizableNeuralNetwork::mutate() {
 
-//    public OptimizableNeuralNetwork mutate() {
-//        OptimizableNeuralNetwork mutated = this.clone();
 
-//        switch (this.random.nextInt(4)) {
-//            case 0: {
-//                List<Double> weights = mutated.neuronsLinks.getAllWeights();
-//                this.mutateWeights(weights);
-//                mutated.neuronsLinks.setAllWeights(weights);
-//            }
-//                break;
-//            case 1: {
-//                this.mutateNeuronsFunctionsParams(mutated.neurons);
-//            }
-//                break;
-//            case 2: {
-//                this.mutateChangeNeuronsFunctions(mutated.neurons);
-//            }
-//                break;
-//            case 3: {
-//                List<Double> weights = mutated.neuronsLinks.getAllWeights();
-//                this.shuffleWeightsOnSubinterval(weights);
-//                mutated.neuronsLinks.setAllWeights(weights);
-//            }
-//                break;
-//        }
-
-//        return mutated;
-//    }
-//}
+OptimizableNeuralNetwork* OptimizableNeuralNetwork::mutate() {
+    OptimizableNeuralNetwork *mutated = this->clone();
+    switch (rand() % 4) {
+            case 0: {
+                std::vector<double> weights = mutated->neuronsLinks->getAllWeights();
+                this->mutateWeights(weights);
+                mutated->neuronsLinks->setAllWeights(weights);
+            } break;
+            case 1: {
+                this->mutateNeuronsFunctionsParams(mutated->neurons);
+            } break;
+            case 2: {
+                this->mutateChangeNeuronsFunctions(mutated->neurons);
+            } break;
+            case 3: {
+                std::vector<double> weights = mutated->neuronsLinks->getAllWeights();
+                this->shuffleWeightsOnSubinterval(weights);
+                mutated->neuronsLinks->setAllWeights(weights);
+            } break;
+    }
+    return mutated;
+}
 
 void OptimizableNeuralNetwork::mutateWeights(std::vector<double> weights) {
     int weightSize = weights.size();
@@ -227,3 +223,46 @@ OptimizableNeuralNetwork* OptimizableNeuralNetwork::clone() {
     return clone;
 }
 
+std::vector<OptimizableNeuralNetwork> OptimizableNeuralNetwork::crossover(OptimizableNeuralNetwork anotherChromosome) {
+
+    OptimizableNeuralNetwork *anotherClone = anotherChromosome.clone();
+    OptimizableNeuralNetwork *thisClone = this->clone();
+
+    switch (rand() % 4) { //like 5
+    case 0: {
+        std::vector<double> thisWeights = thisClone->neuronsLinks->getAllWeights();
+        std::vector<double> anotherWeights = anotherClone->neuronsLinks->getAllWeights();
+        this->twoPointsWeightsCrossover(thisWeights, anotherWeights);
+        thisClone->neuronsLinks->setAllWeights(thisWeights);
+        anotherClone->neuronsLinks->setAllWeights(anotherWeights);
+    } break;
+    case 1: {
+        std::vector<double> thisWeights = thisClone->neuronsLinks->getAllWeights();
+        std::vector<double> anotherWeights = anotherClone->neuronsLinks->getAllWeights();
+        this->uniformelyDistributedWeightsCrossover(thisWeights, anotherWeights);
+        thisClone->neuronsLinks->setAllWeights(thisWeights);
+        anotherClone->neuronsLinks->setAllWeights(anotherWeights);
+    } break;
+
+    case 2: {
+        this->twoPointsNeuronsCrossover(thisClone->neurons, anotherClone->neurons);
+    } break;
+
+    case 3: {
+        this->uniformelyDistributedNeuronsCrossover(thisClone->neurons, anotherClone->neurons);
+    } break;
+
+    case 4: {
+        this->activationIterations += rand() % 2 - rand() % 2;
+        this->activationIterations = (this->activationIterations < 1) ? 1 : this->activationIterations;
+    } break;
+    default:
+        break;
+    }
+    std::vector<OptimizableNeuralNetwork> ret;
+    ret.push_back(*anotherClone);
+    ret.push_back(*thisClone);
+    ret.push_back(*anotherClone->mutate());
+    ret.push_back(*thisClone->mutate());
+    return ret;
+}

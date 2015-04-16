@@ -3,6 +3,7 @@
 
 #include "agent.h"
 #include "neuralnetworks.h"
+#include "optimizableneuralnetwork.h"
 
 //init static members!!!
 class NeuralNetworkDrivenAgent : public Agent {
@@ -30,7 +31,7 @@ public:
     void interact(AgentsEnvironment* env) override;
     double avoidNaNAndInfinity(double x);
     void activateNeuralNetwork(std::vector<double> nnInputs);
-    //static Optimi
+    static OptimizableNeuralNetwork randomNeuralNetworkBrain();
 
 private:
     double normalizeSpeed(double speed);
@@ -41,47 +42,4 @@ private:
 
 
 #endif // NEURALNETWORKDRIVENAGENT
-
-//private double normalizeSpeed(double speed) {
-//        double abs = Math.abs(speed);
-//        if (abs > maxSpeed) {
-//            double sign = Math.signum(speed);
-//            speed = sign * (abs - (Math.floor(abs / maxSpeed) * maxSpeed));
-//        }
-//        return speed;
-//    }
-
-//    private double normalizeDeltaAngle(double angle) {
-//        double abs = Math.abs(angle);
-//        if (abs > maxDeltaAngle) {
-//            double sign = Math.signum(angle);
-//            angle = sign * (abs - (Math.floor(abs / maxDeltaAngle) * maxDeltaAngle));
-//        }
-//        return angle;
-//    }
-
-//    public static OptimizableNeuralNetwork randomNeuralNetworkBrain() {
-//        OptimizableNeuralNetwork nn = new OptimizableNeuralNetwork(15);
-//        for (int i = 0; i < 15; i++) {
-//            ThresholdFunction f = ThresholdFunction.getRandomFunction();
-//            nn.setNeuronFunction(i, f, f.getDefaultParams());
-//        }
-//        for (int i = 0; i < 6; i++) {
-//            nn.setNeuronFunction(i, ThresholdFunction.LINEAR, ThresholdFunction.LINEAR.getDefaultParams());
-//        }
-//        for (int i = 0; i < 6; i++) {
-//            for (int j = 6; j < 15; j++) {
-//                nn.addLink(i, j, Math.random());
-//            }
-//        }
-//        for (int i = 6; i < 15; i++) {
-//            for (int j = 6; j < 15; j++) {
-//                if (i < j) {
-//                    nn.addLink(i, j, Math.random());
-//                }
-//            }
-//        }
-//        return nn;
-//    }
-//}
 

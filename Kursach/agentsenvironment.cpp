@@ -68,4 +68,3 @@ const std::vector<AbstractAgent *> AgentsEnvironment::getAgents() {
     return agents;
 }
 
-//const std::vector<AbstractAgent *> &getAgents();
