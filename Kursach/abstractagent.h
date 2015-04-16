@@ -12,13 +12,13 @@ class AbstractAgent {
 public:
     virtual ~AbstractAgent() {};
 
-    virtual double getY() = 0;
-    virtual double getX() = 0;
+    virtual double getY();
+    virtual double getX();
 
-    virtual void setX(double x) = 0;
-    virtual void setY(double y) = 0;
+    virtual void setX(double x);
+    virtual void setY(double y);
 
-    virtual void interact(AgentsEnvironment *env) = 0;
+    virtual void interact(AgentsEnvironment *env);
 };
 
 #endif // ABSTRACTAGENT

@@ -1,6 +1,7 @@
 #include "optimizableneuralnetwork.h"
 #include <set>
 #include <tr1/functional>
+
 using std::tr1::hash;
 
 double OptimizableNeuralNetwork::weightsMutationInterval = 1;

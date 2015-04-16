@@ -41,6 +41,8 @@ std::vector<double> Links::getAllWeights() {
 //    }
 
 //    return weights;
+    std::vector<double> ret;
+    return ret;
 }
 
 

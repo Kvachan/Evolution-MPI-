@@ -37,6 +37,7 @@ double NeuralNetwork::getAfterActivationSignal(int neuronIndx) {
 //    } else {
 //        throw new IllegalArgumentException();
 //    }
+    return 0; //EXCEPTION
 }
 
 void NeuralNetwork::activate() {
