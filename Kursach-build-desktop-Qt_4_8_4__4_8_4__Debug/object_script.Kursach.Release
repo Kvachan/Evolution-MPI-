@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\agent.o
+./release\food.o
+./release\movingfood.o
+./release\agentsenvironment.o
+./release\eaternfoodobserver.o
+./release\neuron.o
+./release\links.o
+./release\neuralnetworks.o
+./release\neuralnetworkdrivenagent.o
+./release\optimizableneuralnetworks.o
+./release\globalfunctions.o
+./release\moc_mainwindow.o
+);

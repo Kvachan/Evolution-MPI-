@@ -1,32 +1,32 @@
 #ifndef NEURALNETWORKS
 #define NEURALNETWORKS
 
-#include "cloneable.h"
-#include "neuron.h"
 #include "links.h"
 
+class Neuron;
+class IThresholdFunction;
 
-class NeuralNetwork : public Cloneable {
+class NeuralNetwork {   // : public Cloneable {
 
 protected:
-    std::vector<Neuron> neurons;
+    std::vector<Neuron *> neurons;
     Links* neuronsLinks;
     int activationIterations;
 
 public:
     NeuralNetwork();
     NeuralNetwork(int numberOfNeurons);
-    void setNeuronFunction(int neuronNumber, ThresholdFunction function, std::vector<double> params);
+    void setNeuronFunction(int neuronNumber, IThresholdFunction *function, std::vector<double> params);
     void addLink(int activatorNeuronNumber, int receiverNeuronNumber, double weight);
     void putSignalToNeuron(int neuronIndex, double signalValue);
     double getAfterActivationSignal(int neuronIndx);
     void activate();
     std::vector<double> getWeightsOfLinks();
     void setWeightsOfLinks(std::vector<double> weights);
-    std::vector<Neuron> getNeurons();
+    std::vector<Neuron *> getNeurons();         // Возвращает копии. Это нормально???
     int getNeuronsCount();
     int getActivationsIterations();
-    void setNeurons(std::vector<Neuron> newNeurons);
+    void setNeurons(std::vector<Neuron *> newNeurons);
     void setActivationIterations(int activationIterations);
     void setNeuronalLinks(Links* newNeuronLinks);
     Links *getNeuronsLinks();

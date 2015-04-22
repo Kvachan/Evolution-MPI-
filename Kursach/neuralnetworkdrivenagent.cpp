@@ -1,5 +1,6 @@
 #include "neuralnetworkdrivenagent.h"
 #include <cmath>
+#include "thresholdfunction.h"
 
 double NeuralNetworkDrivenAgent::maxSpeed = 4;
 double NeuralNetworkDrivenAgent::maxDeltaAngle = 1;
@@ -11,7 +12,7 @@ double NeuralNetworkDrivenAgent::maxAgentsDistance = 1;
 NeuralNetworkDrivenAgent::NeuralNetworkDrivenAgent(double x, double y, double angle)
     : Agent(x, y, angle) {
 
-};
+}
 
 void NeuralNetworkDrivenAgent::setBrain(NeuralNetwork brain) {
     this->brain = brain;
@@ -135,13 +136,14 @@ std::vector<double> NeuralNetworkDrivenAgent::createNnInputs(AgentsEnvironment *
 //    }
 }
 
-bool NeuralNetworkDrivenAgent::inSight(AbstractAgent agent) {
-    double crossProduct = this->cosTeta(this->getRx(), this->getRy(), agent.getX() - this->getX(), agent.getY() - this->getY());
+bool NeuralNetworkDrivenAgent::inSight(AbstractAgent *agent) {
+    double crossProduct = this->cosTeta(this->getRx(), this->getRy(), agent->getX() - this->getX(),
+                                        agent->getY() - this->getY());
     return (crossProduct > 0);
 }
 
-double NeuralNetworkDrivenAgent::distanceTo(AbstractAgent agent) {
-    return this->module(agent.getX() - this->getX(), agent.getY() - this->getY());
+double NeuralNetworkDrivenAgent::distanceTo(AbstractAgent *agent) {
+    return this->module(agent->getX() - this->getX(), agent->getY() - this->getY());
 }
 double NeuralNetworkDrivenAgent::cosTeta(double vx1, double vy1, double vx2, double vy2) {
     double v1 = this->module(vx1, vy2);
@@ -188,12 +190,12 @@ double NeuralNetworkDrivenAgent::normalizeDeltaAngle(double angle) {
 OptimizableNeuralNetwork NeuralNetworkDrivenAgent::randomNeuralNetworkBrain() {
     OptimizableNeuralNetwork nn(15);
     for(int i = 0; i < 15; i++) {
-        ThresholdFunctionSigma f;
-        nn.setNeuronFunction(i, f, f.getDefaultParams());
+        auto f = new ThresholdFunctionSigma;
+        nn.setNeuronFunction(i, f, f->getDefaultParams());
     }
     for(int i = 0; i < 6; i++) {
-        ThresholdFunctionLinear f;
-        nn.setNeuronFunction(i,  f, f.getDefaultParams());
+        auto f = new ThresholdFunctionLinear;
+        nn.setNeuronFunction(i,  f, f->getDefaultParams());
     }
     for(int i = 0; i < 6; i++) {
         for(int j = 0; j < 15; j++) {

@@ -1,8 +1,13 @@
 #include "optimizableneuralnetwork.h"
 #include <set>
-#include <tr1/functional>
+#include <cmath>
+#include <functional>
+#include <random>
+//#include <tr1/functional>
+#include "thresholdfunction.h"
+#include "neuron.h"
 
-using std::tr1::hash;
+//using std::tr1::hash;
 
 double OptimizableNeuralNetwork::weightsMutationInterval = 1;
 double OptimizableNeuralNetwork::neuronParamsMutationInterval = 1;
@@ -62,7 +67,7 @@ void OptimizableNeuralNetwork::uniformelyDistributedWeightsCrossover(std::vector
     }
 }
 
-void OptimizableNeuralNetwork::twoPointsNeuronsCrossover(std::vector<Neuron> thisNeurons, std::vector<Neuron> anotherNeurons) {
+void OptimizableNeuralNetwork::twoPointsNeuronsCrossover(std::vector<Neuron*> thisNeurons, std::vector<Neuron*> anotherNeurons) {
     int left = rand() % thisNeurons.size();
     int right = rand() % thisNeurons.size();
     if(left > right) {
@@ -71,13 +76,14 @@ void OptimizableNeuralNetwork::twoPointsNeuronsCrossover(std::vector<Neuron> thi
         left = tmp;
     }
     for(int i = left; i < right; i++) {
-        Neuron thisNeuron = thisNeurons[i];
+        //std::swap(&thisNeurons[i], &anotherNeurons[i]);
+        Neuron* thisNeuron = thisNeurons[i];
         thisNeurons[i] = anotherNeurons[i];
         anotherNeurons[i] = thisNeuron;
     }
 }
 
-void OptimizableNeuralNetwork::uniformelyDistributedNeuronsCrossover(std::vector<Neuron> thisNeurons, std::vector<Neuron> anotherNeurons) {
+void OptimizableNeuralNetwork::uniformelyDistributedNeuronsCrossover(std::vector<Neuron*> thisNeurons, std::vector<Neuron*> anotherNeurons) {
     int neuronSize = thisNeurons.size();
     int itersCount = rand() % neuronSize;
     if(itersCount == 0) {
@@ -91,8 +97,8 @@ void OptimizableNeuralNetwork::uniformelyDistributedNeuronsCrossover(std::vector
                 i = rand() % neuronSize;
             }
         }
-        Neuron thisNeuron = thisNeurons[i];
-        Neuron anotherNeuron = anotherNeurons[i];
+        Neuron* thisNeuron = thisNeurons[i];
+        Neuron* anotherNeuron = anotherNeurons[i];
 
         anotherNeurons[i] = thisNeuron;
         thisNeurons[i] = anotherNeuron;
@@ -147,7 +153,7 @@ void OptimizableNeuralNetwork::mutateWeights(std::vector<double> weights) {
     }
 }
 
-void OptimizableNeuralNetwork::mutateNeuronsFunctionsParams(std::vector<Neuron> neurons) {
+void OptimizableNeuralNetwork::mutateNeuronsFunctionsParams(std::vector<Neuron*> neurons) {
     int neuronSize = neurons.size();
     int itersCount = rand() % neuronSize;
     if (itersCount == 0) {
@@ -161,20 +167,20 @@ void OptimizableNeuralNetwork::mutateNeuronsFunctionsParams(std::vector<Neuron> 
                 i = rand() % neuronSize;
             }
         }
-        Neuron n = neurons[i];
+        auto *n = neurons[i];
 
-        std::vector<double> params = n.getParams();
+        std::vector<double> params = n->getParams();
         for(int j = 0; j < params.size(); j++) {
             double param = params[j];
             param += (nextGaussian() - nextGaussian()) * neuronParamsMutationInterval;
             params[j] = param;
         }
-        n.setFunctionAndParams(n.getFunction(), params);
+        n->setFunctionAndParams( n->getFunction(), params );
         used.insert(i);
     }
 }
 
-void OptimizableNeuralNetwork::mutateChangeNeuronsFunctions(std::vector<Neuron> neurons) {
+void OptimizableNeuralNetwork::mutateChangeNeuronsFunctions(std::vector<Neuron *> neurons) {
     int neuronSize = neurons.size();
     int itersCount = rand() % neuronSize;
     if(itersCount == 0) {
@@ -188,9 +194,9 @@ void OptimizableNeuralNetwork::mutateChangeNeuronsFunctions(std::vector<Neuron> 
                 i = rand() % neuronSize;
             }
         }
-        Neuron n = neurons[i];
-        ThresholdFunctionSigma f; //like need random function
-        n.setFunctionAndParams(f, f.getDefaultParams());
+        Neuron* n = neurons[i];
+        auto f = new ThresholdFunctionSigma; //like need random function
+        n->setFunctionAndParams(f, f->getDefaultParams());
         used.insert(i);
     }
 }
@@ -218,8 +224,8 @@ OptimizableNeuralNetwork* OptimizableNeuralNetwork::clone() {
     OptimizableNeuralNetwork *clone = new OptimizableNeuralNetwork(this->neurons.size());
     clone->neuronsLinks = this->neuronsLinks->clone();
     clone->activationIterations = this->activationIterations;
-    for(Neuron neuron : this->neurons) {
-        clone->neurons.push_back(*neuron.clone());
+    for(Neuron* neuron : this->neurons) {
+        clone->neurons.push_back(neuron->clone());
     }
     return clone;
 }
@@ -267,3 +273,9 @@ std::vector<OptimizableNeuralNetwork> OptimizableNeuralNetwork::crossover(Optimi
     ret.push_back(*thisClone->mutate());
     return ret;
 }
+
+std::string OptimizableNeuralNetwork::toString() {
+    std::string ret;
+    return ret;
+}
+

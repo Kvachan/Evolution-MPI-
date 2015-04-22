@@ -1,14 +1,14 @@
 #ifndef LINKS
 #define LINKS
 
-#include "cloneable.h"
+//#include "cloneable.h"
 #include <map>
 #include <set>
 #include <vector>
 #include <string>
 
 
-class Links : public Cloneable {
+class Links {   // : public Cloneable {
 
 private:
     std::map<int, std::map<int, double> > links; //pointer?
@@ -27,7 +27,7 @@ public:
 
     Links* clone();
 
-    std::string toString() override;
+    std::string toString();
 
 };
 

@@ -5,18 +5,14 @@
 #include <QSharedPointer>
 #include <math.h>
 
-class ThresholdFunction;
-
-typedef QSharedPointer<ThresholdFunction> ThresholdFunctionPtr;
-
-class ThresholdFunction {
+class IThresholdFunction {
 public:
-    virtual double calculate(double value, const std::vector<double> &params);
-    virtual std::vector<double> getDefaultParams();
-    virtual ~ThresholdFunction(){}
+    virtual double calculate(double value, const std::vector<double> &params) = 0;
+    virtual std::vector<double> getDefaultParams() = 0;
+    virtual ~IThresholdFunction(){}
 };
 
-class ThresholdFunctionLinear : public ThresholdFunction
+class ThresholdFunctionLinear : public IThresholdFunction
 {
 public:
     double calculate(double value, const std::vector<double> &params) override {
@@ -33,7 +29,7 @@ public:
     }
 };
 
-class ThresholdFunctionSign : public ThresholdFunction
+class ThresholdFunctionSign : public IThresholdFunction
 {
 public:
     double calculate(double value, const std::vector<double> &params) override {
@@ -52,7 +48,7 @@ public:
     }
 };
 
-class ThresholdFunctionSigma : public ThresholdFunction
+class ThresholdFunctionSigma : public IThresholdFunction
 {
 public:
     double calculate(double value, const std::vector<double> &params) override {

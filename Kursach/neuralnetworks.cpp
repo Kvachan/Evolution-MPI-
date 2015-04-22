@@ -1,5 +1,5 @@
 #include "neuralnetworks.h"
-
+#include "neuron.h"
 
 
 NeuralNetwork::NeuralNetwork() {
@@ -12,12 +12,10 @@ NeuralNetwork::NeuralNetwork(int numberOfNeurons) {
     }
 }
 
-void NeuralNetwork::setNeuronFunction(int neuronNumber, ThresholdFunction function, std::vector<double> params) {
-    if (neuronNumber >= neurons.size()) {
-        return; //EXCEPTION
-    }
+void NeuralNetwork::setNeuronFunction(int neuronNumber, IThresholdFunction *function, std::vector<double> params) {
+    Q_ASSERT( neuronNumber >= neurons.size() || neuronNumber < 0 );
+    neurons[ neuronNumber ]->setFunctionAndParams(function, params);
     //this.neurons.get(neuronNumber).setFunctionAndParams(function, params);
-    //neurons[neuronNumber]
 }
 void NeuralNetwork::addLink(int activatorNeuronNumber, int receiverNeuronNumber, double weight) {
     neuronsLinks->addWeight(activatorNeuronNumber, receiverNeuronNumber, weight);
@@ -43,9 +41,9 @@ double NeuralNetwork::getAfterActivationSignal(int neuronIndx) {
 void NeuralNetwork::activate() {
     for (int iter = 0; iter < activationIterations; iter++) {
         for (int i = 0; i < neurons.size(); i++) {
-            Neuron activator = neurons[i];//Neuron activator = this.neurons.get(i);
-            activator.activate();
-            double activatorSignal = activator.getAfterActivationSignal();
+            auto activator = neurons[i];//Neuron activator = this.neurons.get(i);
+            activator->activate();
+            double activatorSignal = activator->getAfterActivationSignal();
 //            for (Integer receiverNum : this.neuronsLinks.getReceivers(i)) {
 //                if (receiverNum >= this.neurons.size()) {
 //                    throw new RuntimeException("Neural network has " + this.neurons.size()
@@ -68,11 +66,14 @@ void NeuralNetwork::setWeightsOfLinks(std::vector<double> weights) {
     neuronsLinks->setAllWeights(weights);
 }
 
-std::vector<Neuron> NeuralNetwork::getNeurons() {
-    std::vector<Neuron> ret;
-    for(Neuron n : neurons) {
-        ret.push_back(*n.clone());
+std::vector<Neuron *> NeuralNetwork::getNeurons() {
+    std::vector<Neuron *> ret;
+    ret.reserve( neurons.size() );
+
+    for(auto n : neurons) {
+        ret.push_back( n->clone() );
     }
+
     return ret;
 }
 
@@ -84,9 +85,10 @@ void NeuralNetwork::setNeuronalLinks(Links *newNeuronLinks) {
     this->neuronsLinks = newNeuronLinks;
 }
 
-void NeuralNetwork::setNeurons(std::vector<Neuron> newNeurons) {
+void NeuralNetwork::setNeurons(std::vector<Neuron *> newNeurons) {
     neurons = newNeurons;
 }
+
 int NeuralNetwork::getActivationsIterations() {
     return activationIterations;
 }
@@ -102,11 +104,13 @@ NeuralNetwork* NeuralNetwork::clone() {
     NeuralNetwork *clone = new NeuralNetwork(neurons.size());
     clone->setNeuronalLinks(neuronsLinks->clone());
     clone->setActivationIterations(activationIterations);
-    std::vector<Neuron> newNeurons;
-    clone->setNeurons(newNeurons);
-    for (Neuron neuron : neurons) {
-        clone->neurons.push_back(*neuron.clone());
+    std::vector<Neuron *> newNeurons;
+    clone->setNeurons( newNeurons );
+
+    for (auto neuron : neurons) {
+        clone->neurons.push_back( neuron->clone() );
     }
+
     return clone;
 }
 

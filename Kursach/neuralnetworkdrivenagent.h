@@ -19,8 +19,8 @@ private:
 protected:
     static double maxAgentsDistance; //5
     std::vector<double> createNnInputs(AgentsEnvironment* environment);
-    bool inSight(AbstractAgent agent);
-    double distanceTo(AbstractAgent agent);
+    bool inSight(AbstractAgent *agent);
+    double distanceTo(AbstractAgent *agent);
     double cosTeta(double vx1, double vy1, double vx2, double vy2);
     double module(double vx1, double vy1);
     double pseudoScalarProduct(double vx1, double vy1, double vx2, double vy2);

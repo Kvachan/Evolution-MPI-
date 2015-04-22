@@ -10,15 +10,15 @@ class AgentsEnvironment;
 
 class AbstractAgent {
 public:
-    virtual ~AbstractAgent() {};
+    virtual ~AbstractAgent() {}
 
-    virtual double getY();
-    virtual double getX();
+    virtual double getY() = 0;
+    virtual double getX() = 0;
 
-    virtual void setX(double x);
-    virtual void setY(double y);
+    virtual void setX(double x) = 0;
+    virtual void setY(double y) = 0;
 
-    virtual void interact(AgentsEnvironment *env);
+    virtual void interact(AgentsEnvironment *env) = 0;
 };
 
 #endif // ABSTRACTAGENT

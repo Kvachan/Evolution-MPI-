@@ -1,0 +1,16 @@
+INPUT(
+./debug\main.o
+./debug\mainwindow.o
+./debug\agent.o
+./debug\food.o
+./debug\movingfood.o
+./debug\agentsenvironment.o
+./debug\eaternfoodobserver.o
+./debug\neuron.o
+./debug\links.o
+./debug\neuralnetworks.o
+./debug\neuralnetworkdrivenagent.o
+./debug\optimizableneuralnetworks.o
+./debug\globalfunctions.o
+./debug\moc_mainwindow.o
+);

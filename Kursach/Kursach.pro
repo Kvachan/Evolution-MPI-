@@ -6,6 +6,8 @@
 
 QT       += core gui
 
+CONFIG   += c++11
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Kursach
@@ -24,7 +26,8 @@ SOURCES += main.cpp\
     neuralnetworks.cpp \
     neuralnetworkdrivenagent.cpp \
     optimizableneuralnetworks.cpp \
-    globalfunctions.cpp
+    globalfunctions.cpp \
+    kvrandom.cpp
 
 HEADERS  += mainwindow.h \
     abstractagent.h \
@@ -39,8 +42,8 @@ HEADERS  += mainwindow.h \
     neuron.h \
     thresholdfunction.h \
     links.h \
-    cloneable.h \
     optimizableneuralnetwork.h \
-    random.h
+    kvRandom.h
 
 FORMS    += mainwindow.ui
+
