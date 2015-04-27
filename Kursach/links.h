@@ -23,7 +23,7 @@ public:
 
     void setLinksCount(int count);
 
-    std::set<int> getReceivers(int activatorNeuronNumber);
+    std::vector<int> getReceivers(int activatorNeuronNumber);
 
     Links* clone();
 
