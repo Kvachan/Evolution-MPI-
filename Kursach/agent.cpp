@@ -1,3 +1,4 @@
+//CHECK
 #include "agent.h"
 #include "agentsenvironment.h"
 

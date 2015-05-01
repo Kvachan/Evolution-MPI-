@@ -1,6 +1,8 @@
+//CHECK (filter)
 #include "agentsenvironment.h"
-
 #include "abstractagent.h"
+#include "environmentobserver.h"
+
 
 AgentsEnvironment::AgentsEnvironment() {
     width = 0;
@@ -24,14 +26,14 @@ int AgentsEnvironment::getWidth() {
     return width;
 }
 
-void AgentsEnvironment::timeStep() {
-//    for (AbstractAgent agent : this.getAgents()) {
-//        agent.interact(this);
-//        this.avoidMovingOutsideOfBounds(agent);
-//    }
-//    for (AgentsEnvironmentObserver l : this.listeners) {
-//        l.notify(this);
-//    }
+void AgentsEnvironment::timeStep() {    //synchronized
+    for ( AbstractAgent* agent : this->getAgents()) {
+        agent->interact(this);
+        this->avoidMovingOutsideOfBounds(agent);
+    }
+    for(EnvironmentObserver *l : this->listeners) {
+        l->notify(this);
+    }
 }
 
 void AgentsEnvironment::avoidMovingOutsideOfBounds(AbstractAgent *agent) {
@@ -60,8 +62,7 @@ void AgentsEnvironment::addAgent(AbstractAgent *agent) {
 }
 
 void AgentsEnvironment::removeAgent(AbstractAgent *agent) {
-
-    agents.pop_back();
+    agents.erase(std::find(agents.begin(), agents.end(), agent));
 }
 
 const std::vector<AbstractAgent *> AgentsEnvironment::getAgents() {

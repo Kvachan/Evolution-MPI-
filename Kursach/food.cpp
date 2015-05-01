@@ -1,3 +1,4 @@
+//CHECK
 #include "food.h"
 #include "agentsenvironment.h"
 

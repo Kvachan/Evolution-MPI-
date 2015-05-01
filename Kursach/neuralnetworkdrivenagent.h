@@ -13,7 +13,7 @@ private:
     static double maxDeltaAngle; //1
     static double AGENTS; // -10?
     static double EMPTY; //0
-    static double FOOD; //10
+    static double FOODS; //10
     NeuralNetwork brain; //NeuralNetwork brain;
 
 protected:

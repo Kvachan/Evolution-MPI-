@@ -1,3 +1,4 @@
+//CHECK
 #include "eatenfoodobserver.h"
 #include "food.h"
 #include "agent.h"
@@ -23,7 +24,7 @@ std::vector<Food*> EaternFoodObserver::getEaternFood(AgentsEnvironment *env) {
     std::vector<Food*> eatenFood;
     F: for ( Food *food : getFood(env) ) {
         for ( Agent* fish : getAgent(env) ) {
-            double distanceToFood = abs( food->getX() - fish->getX() - (food->getY() - fish->getY()) );
+            double distanceToFood = module(food->getX() - fish->getX(), food->getY() - fish->getY());
             if (distanceToFood < minEatDistance) {
                 eatenFood.push_back(food);
                 goto F;
@@ -73,10 +74,7 @@ std::vector<Agent*> EaternFoodObserver::getCollidedFishes(AgentsEnvironment *env
               auto firstFish = allFishes[i];
               for (int j = i + 1; j < fishesCount; j++) {
                   auto secondFish = allFishes[j];
-                  double distanceToSecondFish = sqrt(
-                              pow((firstFish->getX() - secondFish->getX()), 2)
-                              +
-                              pow((firstFish->getY() - secondFish->getY()), 2));
+                  double distanceToSecondFish = module(firstFish->getX() - secondFish->getX(), firstFish->getY() - secondFish->getY());
                   if (distanceToSecondFish < maxFishesDistance) {
                       collidedFishes.push_back(secondFish);
                   }
@@ -85,7 +83,7 @@ std::vector<Agent*> EaternFoodObserver::getCollidedFishes(AgentsEnvironment *env
           return collidedFishes;
 }
 
-std::vector<Agent*> EaternFoodObserver::getFishes(AgentsEnvironment *env) {
+std::vector<Agent*> EaternFoodObserver::getFishes(AgentsEnvironment *env) {     //FILTER
     std::vector<Agent*> fishes;
     auto abstractAgents = env->getAgents();
     for (auto abstactAgent : abstractAgents) {
@@ -96,7 +94,7 @@ std::vector<Agent*> EaternFoodObserver::getFishes(AgentsEnvironment *env) {
     return fishes;
 }
 
-std::vector<Food*> EaternFoodObserver::getFood(AgentsEnvironment *env) {
+std::vector<Food*> EaternFoodObserver::getFood(AgentsEnvironment *env) {        //FILTER
     std::vector<Food*> foods;
     auto abstractAgents = env->getAgents();
     for (auto abstractAgent : abstractAgents) {
@@ -107,3 +105,6 @@ std::vector<Food*> EaternFoodObserver::getFood(AgentsEnvironment *env) {
     return foods;
 }
 
+double EaternFoodObserver::module(double vx1, double vy1) {
+    return sqrt(pow(vx1, 2) + pow(vy1, 2));
+}

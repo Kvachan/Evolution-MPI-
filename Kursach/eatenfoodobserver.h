@@ -19,6 +19,7 @@ protected:
     void notify(AgentsEnvironment *env) override;
     void addRandomPieceOfFood(AgentsEnvironment* env);
     void removeEatenAndCreateNewFood(AgentsEnvironment* env, std::vector<Food*> eatenFood);
+    double module(double vx1, double vy1);
 private:
     std::vector<Agent*> getCollidedFishes(AgentsEnvironment *env);
     std::vector<Food*> getEaternFood(AgentsEnvironment *env);

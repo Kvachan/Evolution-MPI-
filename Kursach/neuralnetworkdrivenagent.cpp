@@ -1,12 +1,13 @@
 #include "neuralnetworkdrivenagent.h"
 #include <cmath>
 #include "thresholdfunction.h"
+#include "food.h"
 
 double NeuralNetworkDrivenAgent::maxSpeed = 4;
 double NeuralNetworkDrivenAgent::maxDeltaAngle = 1;
 double NeuralNetworkDrivenAgent::AGENTS = -10;
 double NeuralNetworkDrivenAgent::EMPTY = 0;
-double NeuralNetworkDrivenAgent::FOOD = 10;
+double NeuralNetworkDrivenAgent::FOODS = 10;
 double NeuralNetworkDrivenAgent::maxAgentsDistance = 1;
 
 NeuralNetworkDrivenAgent::NeuralNetworkDrivenAgent(double x, double y, double angle)
@@ -55,12 +56,9 @@ void NeuralNetworkDrivenAgent::activateNeuralNetwork(std::vector<double> nnInput
 
 std::vector<double> NeuralNetworkDrivenAgent::createNnInputs(AgentsEnvironment *environment) {
     std::vector<double> nn;
+    Food *nearestFood = nullptr;
+    double nearestFoodDist = std::numeric_limits<int>::max();
     return nn;
-//    protected List<Double> createNnInputs(AgentsEnvironment environment) {
-//        // Find nearest food
-//        Food nearestFood = null;
-//        double nearestFoodDist = Double.MAX_VALUE;
-
 //        for (Food currFood : environment.filter(Food.class)) {
 //            // agent can see only ahead
 //            if (this.inSight(currFood)) {

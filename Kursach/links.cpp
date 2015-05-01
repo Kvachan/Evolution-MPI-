@@ -1,3 +1,4 @@
+//CHECK
 #include "links.h"
 #include <iostream>
 
@@ -31,11 +32,6 @@ double Links::getWeight(int activatorNeuronNumber, int receiverNeuronNumber) {
 }
 
 void Links::addWeight(int activatorNeuronNumber, int receiverNeuronNumber, double weight) {
-//    if (!this.links.containsKey(activatorNeuronNumber)) {
-//        this.links.put(activatorNeuronNumber, new LinkedHashMap<Integer, Double>());
-//    }
-//    this.links.get(activatorNeuronNumber).put(receiverNeuronNumber, weight);
-
     auto it = links.find(activatorNeuronNumber);
     if (it != links.end()) {
         links[activatorNeuronNumber] = *(new std::map<int, double>());
@@ -46,17 +42,6 @@ void Links::addWeight(int activatorNeuronNumber, int receiverNeuronNumber, doubl
 }
 
 std::vector<double> Links::getAllWeights() {
-//    List<Double> weights = new ArrayList<Double>(this.totalLinksCount);
-
-//    for (Integer activatorIndx : this.links.keySet()) {
-//        Map<Integer, Double> receiverIndxToWeight = this.links.get(activatorIndx);
-
-//        for (Integer receiverIndx : receiverIndxToWeight.keySet()) {
-//            weights.add(receiverIndxToWeight.get(receiverIndx));
-//        }
-//    }
-
-//    return weights;
 
     std::vector<double> result;
 
@@ -73,21 +58,6 @@ std::vector<double> Links::getAllWeights() {
 
 
 void Links::setAllWeights(std::vector<double> weights) {
-//    if (weights.size() != this.totalLinksCount) {
-//        throw new IllegalArgumentException("Number of links is " + this.totalLinksCount
-//                + ". But weights list has size " + weights.size());
-//    }
-
-//    int indx = 0;
-//    for (Integer activatorIndx : this.links.keySet()) {
-//        Map<Integer, Double> receiverIndxToWeight = this.links.get(activatorIndx);
-
-//        for (Integer receiverIndx : receiverIndxToWeight.keySet()) {
-//            receiverIndxToWeight.put(receiverIndx, weights.get(indx));
-//            indx++;
-//        }
-//    }
-
     if (weights.size() != totalLinksCount) {
         std::cout << "ERROR 4" << std::endl;
         return;
@@ -108,13 +78,6 @@ void Links::setLinksCount(int count) {
 Links* Links::clone() {
     Links* clone = new Links();
     clone->setLinksCount(totalLinksCount);
-//    for (int key : this.links.keySet()) {
-//        Map<Integer, Double> val = new LinkedHashMap<Integer, Double>();
-//        for (int valKey : this.links.get(key).keySet()) {
-//            val.put(valKey, this.links.get(key).get(valKey));
-//        }
-//        clone.links.put(key, val);
-//    }
     for (auto it = links.begin(); it != links.end(); it++) {
 
         auto new_links  = new std::map<int, double>();
@@ -134,7 +97,6 @@ std::string Links::toString() {
 }
 
 std::vector<int> Links::getReceivers(int activatorNeuronNumber) {
-    //std::set<int> ret;
     std::vector<int> result;
     auto it = links.find(activatorNeuronNumber);
     if(it != links.end()) {
@@ -144,15 +106,3 @@ std::vector<int> Links::getReceivers(int activatorNeuronNumber) {
     }
     return result;
 }
-
-/*
- * public Collection<Integer> getReceivers(int activatorNeuronNumber) {
-        Collection<Integer> ret = null;
-        if (this.links.containsKey(activatorNeuronNumber)) {
-            ret = Collections.unmodifiableSet(this.links.get(activatorNeuronNumber).keySet());
-        } else {
-            ret = Collections.emptySet();
-        }
-        return ret;
-    }
-*/

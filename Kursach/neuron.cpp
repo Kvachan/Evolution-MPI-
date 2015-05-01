@@ -1,3 +1,4 @@
+//CHECK neuron::clone()?
 #include "neuron.h"
 
 

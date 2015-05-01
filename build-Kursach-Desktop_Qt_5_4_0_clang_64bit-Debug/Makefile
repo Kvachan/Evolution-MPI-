@@ -658,7 +658,8 @@ movingfood.o: ../Kursach/movingfood.cpp ../Kursach/movingfood.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o movingfood.o ../Kursach/movingfood.cpp
 
 agentsenvironment.o: ../Kursach/agentsenvironment.cpp ../Kursach/agentsenvironment.h \
-		../Kursach/abstractagent.h
+		../Kursach/abstractagent.h \
+		../Kursach/environmentobserver.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o agentsenvironment.o ../Kursach/agentsenvironment.cpp
 
 eaternfoodobserver.o: ../Kursach/eaternfoodobserver.cpp ../Kursach/eatenfoodobserver.h \
@@ -695,7 +696,8 @@ neuralnetworkdrivenagent.o: ../Kursach/neuralnetworkdrivenagent.cpp ../Kursach/n
 		../Kursach/kvRandom.h \
 		../Kursach/thresholdfunction.h \
 		/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QSharedPointer \
-		/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qsharedpointer.h
+		/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qsharedpointer.h \
+		../Kursach/food.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o neuralnetworkdrivenagent.o ../Kursach/neuralnetworkdrivenagent.cpp
 
 optimizableneuralnetworks.o: ../Kursach/optimizableneuralnetworks.cpp ../Kursach/optimizableneuralnetwork.h \

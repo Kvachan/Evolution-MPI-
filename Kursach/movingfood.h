@@ -9,8 +9,10 @@ class MovingFood : public Food {
 public:
     MovingFood();
     MovingFood(double x, double y, double angle, double spped);
-protected:
     void interact(AgentsEnvironment *env) override;
+protected:
+    void move(AgentsEnvironment *env);
+
 };
 
 #endif // MOVINGFOOD

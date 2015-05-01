@@ -1,3 +1,4 @@
+//don't have implementation, because it's abstract class (implements in EaternFoodObserver)
 #ifndef ENVIRONMENTOBSERVER
 #define ENVIRONMENTOBSERVER
 
