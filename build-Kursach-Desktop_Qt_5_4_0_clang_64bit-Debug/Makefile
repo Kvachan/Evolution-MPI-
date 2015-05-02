@@ -61,7 +61,14 @@ SOURCES       = ../Kursach/main.cpp \
 		../Kursach/neuralnetworkdrivenagent.cpp \
 		../Kursach/optimizableneuralnetworks.cpp \
 		../Kursach/globalfunctions.cpp \
-		../Kursach/kvrandom.cpp moc_mainwindow.cpp
+		../Kursach/kvrandom.cpp \
+		../Kursach/mapelement.cpp \
+		../Kursach/chromosomescomparator.cpp \
+		../Kursach/fitness.cpp \
+		../Kursach/chromosome.cpp \
+		../Kursach/iterartionlistener.cpp \
+		../Kursach/population.cpp \
+		../Kursach/geneticalgorithm.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		agent.o \
@@ -76,6 +83,13 @@ OBJECTS       = main.o \
 		optimizableneuralnetworks.o \
 		globalfunctions.o \
 		kvrandom.o \
+		mapelement.o \
+		chromosomescomparator.o \
+		fitness.o \
+		chromosome.o \
+		iterartionlistener.o \
+		population.o \
+		geneticalgorithm.o \
 		moc_mainwindow.o
 DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		/Qt/5.4/clang_64/mkspecs/qdevice.pri \
@@ -220,7 +234,14 @@ DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		../Kursach/thresholdfunction.h \
 		../Kursach/links.h \
 		../Kursach/optimizableneuralnetwork.h \
-		../Kursach/kvRandom.h ../Kursach/main.cpp \
+		../Kursach/kvRandom.h \
+		../Kursach/mapelement.h \
+		../Kursach/geneticalgorithm.h \
+		../Kursach/chromosomescomprator.h \
+		../Kursach/fitness.h \
+		../Kursach/chromosome.h \
+		../Kursach/iterationlistener.h \
+		../Kursach/population.h ../Kursach/main.cpp \
 		../Kursach/mainwindow.cpp \
 		../Kursach/agent.cpp \
 		../Kursach/food.cpp \
@@ -233,7 +254,14 @@ DIST          = /Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		../Kursach/neuralnetworkdrivenagent.cpp \
 		../Kursach/optimizableneuralnetworks.cpp \
 		../Kursach/globalfunctions.cpp \
-		../Kursach/kvrandom.cpp
+		../Kursach/kvrandom.cpp \
+		../Kursach/mapelement.cpp \
+		../Kursach/chromosomescomparator.cpp \
+		../Kursach/fitness.cpp \
+		../Kursach/chromosome.cpp \
+		../Kursach/iterartionlistener.cpp \
+		../Kursach/population.cpp \
+		../Kursach/geneticalgorithm.cpp
 QMAKE_TARGET  = Kursach
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Kursach.app/Contents/MacOS/Kursach
@@ -573,8 +601,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kursach/mainwindow.h ../Kursach/abstractagent.h ../Kursach/agent.h ../Kursach/food.h ../Kursach/movingfood.h ../Kursach/agentsenvironment.h ../Kursach/environmentobserver.h ../Kursach/eatenfoodobserver.h ../Kursach/neuralnetworkdrivenagent.h ../Kursach/neuralnetworks.h ../Kursach/neuron.h ../Kursach/thresholdfunction.h ../Kursach/links.h ../Kursach/optimizableneuralnetwork.h ../Kursach/kvRandom.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/agent.cpp ../Kursach/food.cpp ../Kursach/movingfood.cpp ../Kursach/agentsenvironment.cpp ../Kursach/eaternfoodobserver.cpp ../Kursach/neuron.cpp ../Kursach/links.cpp ../Kursach/neuralnetworks.cpp ../Kursach/neuralnetworkdrivenagent.cpp ../Kursach/optimizableneuralnetworks.cpp ../Kursach/globalfunctions.cpp ../Kursach/kvrandom.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kursach/mainwindow.h ../Kursach/abstractagent.h ../Kursach/agent.h ../Kursach/food.h ../Kursach/movingfood.h ../Kursach/agentsenvironment.h ../Kursach/environmentobserver.h ../Kursach/eatenfoodobserver.h ../Kursach/neuralnetworkdrivenagent.h ../Kursach/neuralnetworks.h ../Kursach/neuron.h ../Kursach/thresholdfunction.h ../Kursach/links.h ../Kursach/optimizableneuralnetwork.h ../Kursach/kvRandom.h ../Kursach/mapelement.h ../Kursach/geneticalgorithm.h ../Kursach/chromosomescomprator.h ../Kursach/fitness.h ../Kursach/chromosome.h ../Kursach/iterationlistener.h ../Kursach/population.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kursach/main.cpp ../Kursach/mainwindow.cpp ../Kursach/agent.cpp ../Kursach/food.cpp ../Kursach/movingfood.cpp ../Kursach/agentsenvironment.cpp ../Kursach/eaternfoodobserver.cpp ../Kursach/neuron.cpp ../Kursach/links.cpp ../Kursach/neuralnetworks.cpp ../Kursach/neuralnetworkdrivenagent.cpp ../Kursach/optimizableneuralnetworks.cpp ../Kursach/globalfunctions.cpp ../Kursach/kvrandom.cpp ../Kursach/mapelement.cpp ../Kursach/chromosomescomparator.cpp ../Kursach/fitness.cpp ../Kursach/chromosome.cpp ../Kursach/iterartionlistener.cpp ../Kursach/population.cpp ../Kursach/geneticalgorithm.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Kursach/mainwindow.ui $(DISTDIR)/
 
 
@@ -715,6 +743,33 @@ globalfunctions.o: ../Kursach/globalfunctions.cpp
 
 kvrandom.o: ../Kursach/kvrandom.cpp ../Kursach/kvRandom.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o kvrandom.o ../Kursach/kvrandom.cpp
+
+mapelement.o: ../Kursach/mapelement.cpp ../Kursach/mapelement.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mapelement.o ../Kursach/mapelement.cpp
+
+chromosomescomparator.o: ../Kursach/chromosomescomparator.cpp ../Kursach/chromosomescomprator.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chromosomescomparator.o ../Kursach/chromosomescomparator.cpp
+
+fitness.o: ../Kursach/fitness.cpp ../Kursach/fitness.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fitness.o ../Kursach/fitness.cpp
+
+chromosome.o: ../Kursach/chromosome.cpp ../Kursach/chromosome.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chromosome.o ../Kursach/chromosome.cpp
+
+iterartionlistener.o: ../Kursach/iterartionlistener.cpp ../Kursach/iterationlistener.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o iterartionlistener.o ../Kursach/iterartionlistener.cpp
+
+population.o: ../Kursach/population.cpp ../Kursach/population.h \
+		../Kursach/chromosome.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o population.o ../Kursach/population.cpp
+
+geneticalgorithm.o: ../Kursach/geneticalgorithm.cpp ../Kursach/geneticalgorithm.h \
+		../Kursach/chromosomescomprator.h \
+		../Kursach/chromosome.h \
+		../Kursach/iterationlistener.h \
+		../Kursach/fitness.h \
+		../Kursach/population.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o geneticalgorithm.o ../Kursach/geneticalgorithm.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

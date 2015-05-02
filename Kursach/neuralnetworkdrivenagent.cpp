@@ -57,7 +57,7 @@ void NeuralNetworkDrivenAgent::activateNeuralNetwork(std::vector<double> nnInput
 std::vector<double> NeuralNetworkDrivenAgent::createNnInputs(AgentsEnvironment *environment) {
     std::vector<double> nn;
     Food *nearestFood = nullptr;
-    double nearestFoodDist = std::numeric_limits<int>::max();
+    double nearestFoodDist = std::numeric_limits<double>::max();
     return nn;
 //        for (Food currFood : environment.filter(Food.class)) {
 //            // agent can see only ahead

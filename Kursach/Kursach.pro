@@ -28,7 +28,14 @@ SOURCES += main.cpp\
     neuralnetworkdrivenagent.cpp \
     optimizableneuralnetworks.cpp \
     globalfunctions.cpp \
-    kvrandom.cpp
+    kvrandom.cpp \
+    mapelement.cpp \
+    chromosomescomparator.cpp \
+    fitness.cpp \
+    chromosome.cpp \
+    iterartionlistener.cpp \
+    population.cpp \
+    geneticalgorithm.cpp
 
 HEADERS  += mainwindow.h \
     abstractagent.h \
@@ -44,7 +51,14 @@ HEADERS  += mainwindow.h \
     thresholdfunction.h \
     links.h \
     optimizableneuralnetwork.h \
-    kvRandom.h
+    kvRandom.h \
+    mapelement.h \
+    geneticalgorithm.h \
+    chromosomescomprator.h \
+    fitness.h \
+    chromosome.h \
+    iterationlistener.h \
+    population.h
 
 FORMS    += mainwindow.ui
 
