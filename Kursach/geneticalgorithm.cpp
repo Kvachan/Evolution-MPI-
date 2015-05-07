@@ -10,17 +10,18 @@ GeneticAlgorithm<C, T>::GeneticAlgorithm()
 };
 
 template <class C, class T>
-GeneticAlgorithm<C, T>::GeneticAlgorithm(Population<C> population, Fitness<C, T> fitnessFunc) {
+GeneticAlgorithm<C, T>::GeneticAlgorithm(Population<C, T> population, Fitness<C, T> fitnessFunc) {
     this->population = population;
     this->fitnessFunc = fitnessFunc;
-    this->chromosomesComparator = new chromosomesComparator();
+    //this->ChromosomesComparator = new chromosomesComparator<C, T>();
+    this->chromosomesComparator = new ChromosomesComparator<C, T>();
     this->population->sortPopulationByFitness();
 }
 
 template <class C, class T>
 void GeneticAlgorithm<C, T>::evolve() {
     int parentPopulationSize = this->population->getSize();
-    Population<*C>* newPopulation = new Population<C*>();
+    Population<C, T>* newPopulation = new Population<C, T>();
     for (int i = 0; (i < parentPopulationSize) && (i < this->parentChromosomesSurviveCount); i++) {
         newPopulation->addChromosome(this->population->getChromosomeByIndex(i));
     }
@@ -46,6 +47,7 @@ void GeneticAlgorithm<C, T>::evolve() {
             this->population = newPopulation;
         }
 }
+}
 
 template <class C, class T>
 void GeneticAlgorithm<C, T>::evolve(int count) {
@@ -57,7 +59,7 @@ void GeneticAlgorithm<C, T>::evolve(int count) {
         }
         this->evolve();
         this->iteration = i;
-        for (IterartionListener<*C, *T> *l : this->IterartionListener) {
+        for (IterartionListener<C, T> *l : this->IterartionListener) {
             l->update(*this);
         }
     }
@@ -70,10 +72,11 @@ int GeneticAlgorithm<C, T>::getIteration() {
 
 template <class C, class T>
 void GeneticAlgorithm<C, T>::terminate() {
-    this->terminate = true;
+    this->termin = true;
 }
 
-Population<C*>* getPopulation() {
+template <class C, class T>
+Population<C, T>* GeneticAlgorithm<C, T>::getPopulation() {
     return this->population;
 }
 
@@ -97,13 +100,13 @@ int GeneticAlgorithm<C, T>::getParentChromosomesSurviveCount() {
 }
 
 template <class C, class T>
-void GeneticAlgorithm<C, T>::addIterationListener(IterartionListener<C*, T*> *listener) {
+void GeneticAlgorithm<C, T>::addIterationListener(IterartionListener<C, T> *listener) {
     this->IterartionListener->push_back(listener);
 }
 
 template <class C, class T>
-void GeneticAlgorithm<C, T>::removeIterationListener(IterartionListener<C*, T*> *listener) {
-    this->IterartionListener->erase(std::find(IterartionListener->begin(), IterartionListener->end(), listener));
+void GeneticAlgorithm<C, T>::removeIterationListener(IterartionListener<C, T> *listener) {
+    this->IterartionListener->erase(std::find(IterartListener->begin(), IterartListener->end(), listener));
 }
 
 template <class C, class T>
@@ -115,4 +118,3 @@ template <class C, class T>
 void GeneticAlgorithm<C, T>::clearCache() {
     this->chromosomesComparator->clearCache();
 }
-

@@ -2,6 +2,7 @@
 #include "chromosome.h"
 #include <math.h>
 #include <cmath>
+#include <random>
 
 template <class C, class T>
 int Population<C, T>::DEFAULT_NUMBER_OF_CHROMOSOMES = 32;

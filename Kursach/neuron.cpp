@@ -76,8 +76,6 @@ Neuron* Neuron::clone() {
 //    return new Neuron(thresholdFunction->clone(), cloneParams);
 
     Neuron* clone = new Neuron(thresholdFunction, cloneParams);
-//    clone->inputSignal = 0;
-//    clone->afterActivationSignal = 0;
     return clone;
 
 }
