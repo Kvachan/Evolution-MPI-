@@ -9,7 +9,7 @@ class EnvironmentObserver;
 class AgentsEnvironment {
     int width;
     int height;
-    std::vector<AbstractAgent*> agents;
+
     std::vector<EnvironmentObserver*> listeners;
     void avoidMovingOutsideOfBounds(AbstractAgent *agent);
 public:
@@ -24,6 +24,9 @@ public:
     const std::vector<AbstractAgent *> getAgents();
     void addAgent(AbstractAgent *agent);
     void removeAgent(AbstractAgent *agent);
+
+    std::vector<AbstractAgent*> agents;
+
 };
 
 //    public synchronized void removeAgent(AbstractAgent agent) {

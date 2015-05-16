@@ -18,7 +18,7 @@ private:
 
 protected:
     static double maxAgentsDistance; //5
-    std::vector<double> createNnInputs(AgentsEnvironment* environment);
+    std::vector<double> *createNnInputs(AgentsEnvironment* environment);
     bool inSight(AbstractAgent *agent);
     double distanceTo(AbstractAgent *agent);
     double cosTeta(double vx1, double vy1, double vx2, double vy2);
@@ -27,11 +27,11 @@ protected:
 
 public:
     NeuralNetworkDrivenAgent(double x, double y, double angle);
-    void setBrain(NeuralNetwork brain);
+    void setBrain(NeuralNetwork *brain);
     void interact(AgentsEnvironment* env) override;
     double avoidNaNAndInfinity(double x);
-    void activateNeuralNetwork(std::vector<double> nnInputs);
-    static OptimizableNeuralNetwork randomNeuralNetworkBrain();
+    void activateNeuralNetwork(std::vector<double> *nnInputs);
+    static OptimizableNeuralNetwork* randomNeuralNetworkBrain();
 
 private:
     double normalizeSpeed(double speed);

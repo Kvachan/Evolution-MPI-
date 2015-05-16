@@ -2,6 +2,7 @@
 #include <cmath>
 #include "thresholdfunction.h"
 #include "food.h"
+#include "agentsenvironment.h"
 
 double NeuralNetworkDrivenAgent::maxSpeed = 4;
 double NeuralNetworkDrivenAgent::maxDeltaAngle = 1;
@@ -10,17 +11,19 @@ double NeuralNetworkDrivenAgent::EMPTY = 0;
 double NeuralNetworkDrivenAgent::FOODS = 10;
 double NeuralNetworkDrivenAgent::maxAgentsDistance = 1;
 
+#define SIGNUM(Value) ((Value) < 0 ? (-1) : !!(Value))
+
 NeuralNetworkDrivenAgent::NeuralNetworkDrivenAgent(double x, double y, double angle)
     : Agent(x, y, angle) {
 
 }
 
-void NeuralNetworkDrivenAgent::setBrain(NeuralNetwork brain) {
+void NeuralNetworkDrivenAgent::setBrain(NeuralNetwork* brain) {
     this->brain = brain;
 }
 
 void NeuralNetworkDrivenAgent::interact(AgentsEnvironment *env) {
-    std::vector<double> nnInputs = this->createNnInputs(env);
+    std::vector<double>* nnInputs = this->createNnInputs(env);
     this->activateNeuralNetwork(nnInputs);
 
 
@@ -47,91 +50,82 @@ double NeuralNetworkDrivenAgent::avoidNaNAndInfinity(double x) {
     return x;
 }
 
-void NeuralNetworkDrivenAgent::activateNeuralNetwork(std::vector<double> nnInputs) {
-    for(int i = 0; i < nnInputs.size(); i++) {
-        this->brain.putSignalToNeuron(i, nnInputs[i]);
+void NeuralNetworkDrivenAgent::activateNeuralNetwork(std::vector<double>* nnInputs) {
+    for(int i = 0; i < nnInputs->size(); i++) {
+        this->brain.putSignalToNeuron(i, (*nnInputs)[i]);
     }
     this->brain.activate();
 }
 
-std::vector<double> NeuralNetworkDrivenAgent::createNnInputs(AgentsEnvironment *environment) {
-    std::vector<double> nn;
+std::vector<double>* NeuralNetworkDrivenAgent::createNnInputs(AgentsEnvironment *environment) {
+    std::vector<double>* nn;
     Food *nearestFood = nullptr;
     double nearestFoodDist = std::numeric_limits<double>::max();
-    return nn;
-//        for (Food currFood : environment.filter(Food.class)) {
-//            // agent can see only ahead
-//            if (this.inSight(currFood)) {
-//                double currFoodDist = this.distanceTo(currFood);
-//                if ((nearestFood == null) || (currFoodDist <= nearestFoodDist)) {
-//                    nearestFood = currFood;
-//                    nearestFoodDist = currFoodDist;
-//                }
-//            }
-//        }
 
-//        // Find nearest agent
-//        Agent nearestAgent = null;
-//        double nearestAgentDist = maxAgentsDistance;
+    auto agents = environment->agents;
+    for (auto it = agents.begin(); it != agents.end(); ++it)
+    {
+        if ((*it)->getFood() != NULL && inSight(*it))
+        {
+            double currFoodDist = distanceTo(*it);
+            if (currFoodDist <= nearestFoodDist)
+            {
+                nearestFood = (Food*)(*it);
+                nearestFoodDist = currFoodDist;
+            }
+        }
+    }
 
-//        for (Agent currAgent : environment.filter(Agent.class)) {
-//            // agent can see only ahead
-//            if ((this != currAgent) && (this.inSight(currAgent))) {
-//                double currAgentDist = this.distanceTo(currAgent);
-//                if (currAgentDist <= nearestAgentDist) {
-//                    nearestAgent = currAgent;
-//                    nearestAgentDist = currAgentDist;
-//                }
-//            }
-//        }
+    Agent *nearestAgent = nullptr;
+    double nearestAgentDist = maxAgentsDistance;
+    for (auto it = agents.begin(); it != agents.end(); it++) {
+        if ((*it)->getAgent() != NULL & inSight(*it)) {
+            double currAgentDist = distanceTo(*it);
+            if(currAgentDist <= nearestAgentDist) {
+                nearestAgent = (Agent*)(*it);
+                nearestAgentDist = currAgentDist;
+            }
+        }
+    }
 
-//        List<Double> nnInputs = new LinkedList<Double>();
+    std::vector<double> *nnInputs;
+    double rx = this->getRx();
+    double ry = this->getRy();
+    double x = this->getX();
+    double y = this->getY();
 
-//        double rx = this.getRx();
-//        double ry = this.getRy();
 
-//        double x = this.getX();
-//        double y = this.getY();
+    if(nearestFood != nullptr) {
+        double foodDirectionVectorX = nearestFood->getX() - x;
+        double foodDirectionVectorY = nearestFood->getY() - y;
 
-//        if (nearestFood != null) {
-//            double foodDirectionVectorX = nearestFood.getX() - x;
-//            double foodDirectionVectorY = nearestFood.getY() - y;
+        double foodDirectionCosTeta = SIGNUM(this->pseudoScalarProduct(rx, ry, foodDirectionVectorX, foodDirectionVectorY)) *
+            this->cosTeta(rx, ry, foodDirectionVectorX, foodDirectionVectorY);
+        //            nnInputs.add(FOOD);
+        nnInputs->push_back(FOODS);
+        nnInputs->push_back(nearestFoodDist);
+        nnInputs->push_back(foodDirectionCosTeta);
+    } else {
+        nnInputs->push_back(EMPTY);
+        nnInputs->push_back(0.0);
+        nnInputs->push_back(0.0);
+    }
+    if(nearestAgent != nullptr) {
+        double agentDirectionVectorX = nearestAgent->getX() - x;
+        double agentDirectionVectorY = nearestAgent->getY() - y;
 
-//            // left/right cos
-//            double foodDirectionCosTeta =
-//                    Math.signum(this.pseudoScalarProduct(rx, ry, foodDirectionVectorX, foodDirectionVectorY))
-//                            * this.cosTeta(rx, ry, foodDirectionVectorX, foodDirectionVectorY);
+        double agentDirectionCosTeta = SIGNUM(this->pseudoScalarProduct(rx, ry, agentDirectionVectorX, agentDirectionVectorY))
+                * this->cosTeta(rx, ry, agentDirectionVectorX, agentDirectionVectorY);
 
-//            nnInputs.add(FOOD);
-//            nnInputs.add(nearestFoodDist);
-//            nnInputs.add(foodDirectionCosTeta);
-
-//        } else {
-//            nnInputs.add(EMPTY);
-//            nnInputs.add(0.0);
-//            nnInputs.add(0.0);
-//        }
-
-//        if (nearestAgent != null) {
-//            double agentDirectionVectorX = nearestAgent.getX() - x;
-//            double agentDirectionVectorY = nearestAgent.getY() - y;
-
-//            // left/right cos
-//            double agentDirectionCosTeta =
-//                    Math.signum(this.pseudoScalarProduct(rx, ry, agentDirectionVectorX, agentDirectionVectorY))
-//                            * this.cosTeta(rx, ry, agentDirectionVectorX, agentDirectionVectorY);
-
-//            nnInputs.add(AGENT);
-//            nnInputs.add(nearestAgentDist);
-//            nnInputs.add(agentDirectionCosTeta);
-
-//        } else {
-//            nnInputs.add(EMPTY);
-//            nnInputs.add(0.0);
-//            nnInputs.add(0.0);
-//        }
-//        return nnInputs;
-//    }
+        nnInputs->push_back(AGENTS);
+        nnInputs->push_back(nearestAgentDist);
+        nnInputs->push_back(agentDirectionCosTeta);
+    } else {
+        nnInputs->push_back(EMPTY);
+        nnInputs->push_back(0.0);
+        nnInputs->push_back(0.0);
+    }
+    return nnInputs;
 }
 
 bool NeuralNetworkDrivenAgent::inSight(AbstractAgent *agent) {
@@ -165,8 +159,6 @@ double NeuralNetworkDrivenAgent::pseudoScalarProduct(double vx1, double vy1, dou
     return (vx1 * vy2) - (vy1 * vx2);
 }
 
-#define SIGNUM(Value) ((Value) < 0 ? (-1) : !!(Value))
-
 double NeuralNetworkDrivenAgent::normalizeSpeed(double speed) {
     double absolut = std::abs(speed);
     if(absolut > maxSpeed) {
@@ -185,11 +177,11 @@ double NeuralNetworkDrivenAgent::normalizeDeltaAngle(double angle) {
     return angle;
 }
 
-OptimizableNeuralNetwork NeuralNetworkDrivenAgent::randomNeuralNetworkBrain() {
-    OptimizableNeuralNetwork nn(15);
+OptimizableNeuralNetwork* NeuralNetworkDrivenAgent::randomNeuralNetworkBrain() {
+    OptimizableNeuralNetwork* nn(15);
     for(int i = 0; i < 15; i++) {
         auto f = new ThresholdFunctionSigma;
-        nn.setNeuronFunction(i, f, f->getDefaultParams());
+        nn->setNeuronFunction(i, f, f->getDefaultParams());
     }
     for(int i = 0; i < 6; i++) {
         auto f = new ThresholdFunctionLinear;

@@ -31,3 +31,7 @@ void Food::setY(double y) {
 void Food::interact(AgentsEnvironment *env) {
 
 }
+
+Food* Food::getFood() {
+    return this;
+}

@@ -31,6 +31,8 @@ public:
 
     double getRx();
     double getRy();
+
+    Agent* getAgent() override;
 };
 
 #endif // AGENT

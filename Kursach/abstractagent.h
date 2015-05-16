@@ -8,6 +8,9 @@
 
 class AgentsEnvironment;
 
+class Food;
+class Agent;
+
 class AbstractAgent {
 public:
     virtual ~AbstractAgent() {}
@@ -19,6 +22,10 @@ public:
     virtual void setY(double y) = 0;
 
     virtual void interact(AgentsEnvironment *env) = 0;
+
+    virtual Food* getFood() { return NULL; };
+    virtual Agent* getAgent() { return NULL; };
+
 };
 
 #endif // ABSTRACTAGENT

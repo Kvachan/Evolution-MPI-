@@ -35,7 +35,9 @@ SOURCES += main.cpp\
     chromosome.cpp \
     iterartionlistener.cpp \
     population.cpp \
-    geneticalgorithm.cpp
+    geneticalgorithm.cpp \
+    launcher.cpp \
+    tournamentenvironmentfitness.cpp
 
 HEADERS  += mainwindow.h \
     abstractagent.h \
@@ -58,7 +60,8 @@ HEADERS  += mainwindow.h \
     fitness.h \
     chromosome.h \
     iterationlistener.h \
-    population.h
+    population.h \
+    tournamentenvironmentfitness.h
 
 FORMS    += mainwindow.ui
 

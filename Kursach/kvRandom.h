@@ -3,6 +3,7 @@
 
 double nextUniform();
 double nextGaussian();
+double fRand(double fMin, double fMax);
 
 #endif // KV_RANDOM_H
 

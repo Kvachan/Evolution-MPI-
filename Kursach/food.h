@@ -18,6 +18,8 @@ public:
     void setY(double y) override;
 
     void interact(AgentsEnvironment *env) override;
+
+    Food* getFood() override;
 };
 
 #endif // FOOD
